@@ -351,9 +351,11 @@
                     
                     <div class="mb-6">
                         <div id="qr-code" class="w-48 h-48 mx-auto bg-white p-4 rounded-lg shadow-lg">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-full h-full">
-                                <!-- Enhanced QR code SVG representation -->
-                                <rect x="5" y="5" width="90" height="90" fill="none" stroke="black" stroke-width="1" />
+                            <div class="flex justify-center my-4">
+  <img src="assets/images/pay99-qr.jpg" alt="Pay ₹99 QR Code" class="w-40 h-40 object-contain rounded-md shadow-md" />
+</div>
+                               <!-- Simple QR code SVG representation -->
+                                <rect x="10" y="10" width="80" height="80" fill="none" stroke="black" stroke-width="1" />
                                 <g fill="black">
                                     <!-- QR code pattern - more detailed representation -->
                                     <rect x="15" y="15" width="25" height="25" />
@@ -382,10 +384,11 @@
                     </div>
                     
                     <!-- Payment button with countdown -->
-                    <button id="simulate-payment-btn" class="w-full px-6 py-3 bg-gray-500 text-white rounded-lg font-medium cursor-not-allowed transition-all" disabled>
-                        <span id="payment-btn-text">Please wait <span id="countdown">60</span>s before payment</span>
-                    </button>
-                </div>
+                    
+                    <!-- Simulated payment button for demo purposes -->
+                   <button id="simulate-payment-btn" class="w-full px-6 py-3 bg-gradient-to-r from-purple-500 to-indigo-500 text-white rounded-lg font-medium hover:opacity-90 transition-opacity">
+  Simulated payment
+</button>
             </div>
         </div>
 
@@ -472,12 +475,16 @@
                         <!-- Signatures -->
                         <div class="flex justify-between items-end mt-8 relative z-10">
                             <div class="text-center">
+                                <img src="assets/images/khushi.png" alt="Signature" class="mx-auto mb-2" style="height: 30px; contain;" />
+                             
                                 <div class="w-48 border-b-2 border-gray-400 mb-2"></div>
                                 <p class="handwriting text-gray-800 font-bold text-lg">Jagdeep Kaur I</p>
                                 <p class="handwriting text-gray-600">Founder</p>
                             </div>
                             
                             <div class="text-center">
+                                <img src="assets/images/srushti.jpg" alt="Signature" class="mx-auto mb-2" style="height: 30px; contain;" />
+                             
                                 <div class="w-48 border-b-2 border-gray-400 mb-2"></div>
                                 <p class="handwriting text-gray-800 font-bold text-lg">Prajapati Srushti K</p>
                                 <p class="handwriting text-gray-600">Co-Founder</p>
@@ -489,7 +496,7 @@
             
             <div class="mt-8">
                 <button id="download-again-btn" class="px-8 py-3 bg-gradient-to-r from-yellow-500 to-red-500 text-white rounded-lg font-medium hover:opacity-90 transition-all transform hover:scale-105 shimmer">
-                    📥 Download Certificate Again
+                    📥 Download certificate
                 </button>
             </div>
         </div>
@@ -1169,7 +1176,58 @@
                 });
             }
 
-           function downloadCertificate() {
+          function downloadCertificate() {
+                // Make sure jsPDF is properly loaded
+                if (typeof window.jspdf === 'undefined') {
+                    console.error('jsPDF library not loaded properly');
+                    alert('PDF generation library not loaded. Please try again or check your internet connection.');
+                    return;
+                }
+
+                const certificate = document.getElementById('certificate');
+                
+                // Use html2canvas with proper settings
+                html2canvas(certificate, {
+                    scale: 2, // Higher scale for better quality
+                    logging: false,
+                    useCORS: true,
+                    allowTaint: true,
+                    backgroundColor: '#ffffff'
+                }).then(function(canvas) {
+                    try {
+                        const imgData = canvas.toDataURL('image/png');
+                        
+                        // Create PDF using jsPDF
+                        const { jsPDF } = window.jspdf;
+                        const pdf = new jsPDF({
+                            orientation: 'landscape',
+                            unit: 'mm',
+                            format: 'a4'
+                        });
+                        
+                        const pdfWidth = pdf.internal.pageSize.getWidth();
+                        const pdfHeight = pdf.internal.pageSize.getHeight();
+                        
+                        // Add image to PDF, fitting to page
+                        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                        
+                        // Download the PDF
+                        const userName = localStorage.getItem('userName') || 'User';
+                        const fileName = `${userName.replace(/\s+/g, '_')}_Accent_Training_Certificate.pdf`;
+                        pdf.save(fileName);
+                        
+                        console.log('Certificate downloaded successfully');
+                    } catch (error) {
+                        console.error('Error generating PDF:', error);
+                        alert('There was an error generating your certificate. Please try again.');
+                    }
+                }).catch(function(error) {
+                    console.error('Error capturing certificate:', error);
+                    alert('There was an error capturing your certificate. Please try again.');
+                });
+            }
+        });
+         function downloadCertificate() {
     // Make sure jsPDF is properly loaded
     if (typeof window.jspdf === 'undefined') {
         console.error('jsPDF library not loaded properly');
