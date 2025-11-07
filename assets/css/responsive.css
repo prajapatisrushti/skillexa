@@ -52,3 +52,83 @@ body {
     max-width: 72rem; /* same as Tailwind max-w-5xl */
   }
 }
+/* ------------------------------
+   🌐 RESPONSIVE DESIGN SETTINGS
+--------------------------------*/
+
+/* Default styles (for laptops & desktops) already go above */
+
+/* 🔹 Tablets (width below 1024px) */
+@media (max-width: 1024px) {
+  body {
+    font-size: 15px;
+  }
+
+  .container {
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .navbar, .header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero img {
+    width: 80%;
+  }
+}
+
+/* 🔹 Large phones & small tablets (below 768px) */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+
+  .section {
+    padding: 30px 15px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .sidebar {
+    display: none; /* hide sidebar for smaller screens */
+  }
+}
+
+/* 🔹 Small phones (below 480px) */
+@media (max-width: 480px) {
+  body {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  header h1, .title {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .card {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .navbar ul {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .hero img {
+    width: 100%;
+  }
+}
