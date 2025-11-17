@@ -362,3 +362,109 @@ footer {
     width: 100%;
   }
 }
+/* 🌐 SKILLEXA RESPONSIVE DESIGN — MOBILE FRIENDLY LIKE MMD */
+@media (max-width: 768px) {
+
+  /* NAVBAR */
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.95);
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 220px;
+    padding: 1rem;
+    border-radius: 10px;
+    z-index: 999;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .menu-btn {
+    display: block;
+  }
+
+  /* HERO / HEADER SECTIONS */
+  .hero,
+  .header-section,
+  .top-section {
+    text-align: center;
+    flex-direction: column;
+    padding: 2rem 1rem;
+  }
+
+  .hero h1,
+  .hero h2,
+  .header-title {
+    font-size: 1.6rem;
+    line-height: 1.3;
+  }
+
+  .hero p,
+  .header-description {
+    font-size: 0.9rem;
+  }
+
+  /* DASHBOARD CARDS */
+  .skills-container,
+  .cards,
+  .feature-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .skill-card,
+  .feature-card,
+  .course-card {
+    width: 100%;
+  }
+
+  /* AI TUTOR & JUDGE PAGE */
+  .tutor-container,
+  .judge-container {
+    flex-direction: column;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .tutor-avatar,
+  .judge-avatar {
+    width: 160px;
+    height: 160px;
+    margin: 0 auto 1rem;
+  }
+
+  .tutor-content,
+  .judge-content {
+    width: 100%;
+  }
+
+  /* CHATBOT PAGE */
+  .chatbox {
+    width: 100%;
+    height: 70vh;
+    padding: 1rem;
+  }
+
+  .chat-input-area {
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  /* CERTIFICATE PAGE */
+  .certificate-container {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .certificate-box {
+    width: 100%;
+    padding: 1rem;
+  }
+
+}
