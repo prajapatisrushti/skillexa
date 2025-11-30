@@ -721,18 +721,22 @@
             to { transform: translateY(0); opacity: 1; }
         }
         
-        .blob, .orbit, .orbit-reverse {
-    position: absolute !important;
-    border-radius: 50% !important;
-    filter: blur(60px) !important;
-    opacity: 0.7 !important;
-    overflow: hidden !important;
-    max-width: 180px !important; /* smaller to fit mobile */
-    max-height: 180px !important;
-    left: 50% !important;        /* center horizontally */
-    transform: translateX(-50%) !important;  /* center properly */
-}
-
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            z-index: 0;
+            opacity: 0.4;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.3);
+            animation: particle-float 15s infinite linear;
+        }
         
         @keyframes particle-float {
             0% { transform: translateY(0) translateX(0); }
@@ -890,9 +894,6 @@
             50% { transform: translateY(-10px); }
         }
  
-html, body, section, div {
-    overflow-x: hidden !important;
-}
 
     </style>
 
