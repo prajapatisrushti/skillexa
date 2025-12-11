@@ -107,6 +107,26 @@
   }
 }
 
+/* 👉 ADD STEP-1 FIX HERE (AT THE BOTTOM OF STYLE) */
+
+/* FIX CERTIFICATE WIDTH ON MOBILE */
+#certificate {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+/* On mobile, avoid shrinking too much */
+@media (max-width: 480px) {
+  #certificate {
+    max-width: 460px !important;
+    padding: 12px;
+  }
+}
+
+/* END OF STEP-1 FIX */
     </style>
 </head>
 <body>
@@ -769,7 +789,7 @@
             let currentQuestionIndex = 0;
             let userAnswers = new Array(quizQuestions.length).fill(null);
             let quizTimer;
-            let timeRemaining = 10 * 60; // 10 minutes in seconds
+            let timeRemaining = 1 * 60; // 10 minutes in seconds
 
             // DOM elements
             const loginScreen = document.getElementById('login-screen');
@@ -1132,7 +1152,7 @@
         btn.disabled = false;
         btn.textContent = "Simulate Payment";
         btn.classList.remove("opacity-50", "cursor-not-allowed");
-    }, 600000); //600000=10 min
+    }, 60000); //60000=1 min
     
 }
 
