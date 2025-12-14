@@ -1,1243 +1,1436 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Communication Skills Assessment | Skillexa</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css">
-<style>
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Communication Skills Assessment | Skillexa</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;family=Great+Vibes&amp;family=Parisienne&amp;display=swap" rel="stylesheet">
+  <style>
         body {
+            box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
-            overflow-x: hidden;
         }
+        
         .handwriting {
-            font-family: 'Dancing Script', cursive;
+            font-family: 'Great Vibes', cursive;
         }
-        .gradient-bg {
-            background: linear-gradient(135deg, #000000 0%, #434343 100%);
+        
+        .elegant-script {
+            font-family: 'Parisienne', cursive;
         }
-        .quiz-gradient-bg {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        
+        .black-gradient {
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 25%, #2d2d2d 50%, #1a1a1a 75%, #000000 100%);
         }
+        
+        .quiz-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+        }
+        
         .category-card {
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
         }
+        
         .category-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 20px 40px rgba(255, 255, 255, 0.2);
         }
+        
         .fade-in {
-            animation: fadeIn 0.8s ease-in;
+            animation: fadeIn 1s ease-in;
         }
+        
         .slide-in {
             animation: slideIn 0.8s ease-out;
         }
+        
         .scale-in {
-            animation: scaleIn 0.5s ease-out;
+            animation: scaleIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
+        
+        .bounce-in {
+            animation: bounceIn 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
+        
         @keyframes slideIn {
-            from { transform: translateY(30px); opacity: 0; }
+            from { transform: translateY(40px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
+        
         @keyframes scaleIn {
-            from { transform: scale(0.9); opacity: 0; }
+            from { transform: scale(0.8); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
         }
+        
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.08); }
+            70% { transform: scale(0.92); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+        }
+        
+        .pulse-glow {
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 25px rgba(124, 58, 237, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(236, 72, 153, 0.8); }
+        }
+        
+        .shimmer {
+            background: linear-gradient(90deg, 
+                rgba(255,255,255,0) 0%, 
+                rgba(255,255,255,0.3) 50%, 
+                rgba(255,255,255,0) 100%);
+            background-size: 200% 100%;
+            animation: shimmer 2.5s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.9), 0 0 30px rgba(255, 255, 255, 0.6);
+        }
+        
+        .quiz-option {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .quiz-option:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            transform: translateX(8px);
+        }
+        
+        .quiz-option.selected {
+            background: linear-gradient(90deg, rgba(124, 58, 237, 0.3), rgba(236, 72, 153, 0.3));
+            border-color: #ec4899;
+            transform: translateX(8px);
+        }
+        
+        .timer-bar {
+            transition: width 1s linear;
+        }
+        
+        .progress-bar {
+            transition: width 0.5s ease;
+        }
+        
+        /* Certificate Styles - Responsive Preview */
+        .certificate-container {
+            width: 100%;
+            max-width: 1200px;
+            aspect-ratio: 297 / 210;
+            margin: 0 auto;
+        }
+        
         .certificate-border {
-            background: linear-gradient(135deg, #ff6b6b, #6b47ff);
-            padding: 10px;
+            background: linear-gradient(135deg, #ec4899, #8b5cf6, #ec4899, #8b5cf6);
+            padding: 16px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            height: 100%;
         }
+        
         .certificate-inner-border {
-            background: linear-gradient(135deg, #6b47ff, #ff6b6b);
-            padding: 5px;
+            background: linear-gradient(135deg, #8b5cf6, #ec4899, #8b5cf6, #ec4899);
+            padding: 12px;
+            border-radius: 12px;
+            width: 100%;
+            height: 100%;
         }
+        
         .certificate-content {
             background: white;
             position: relative;
             overflow: hidden;
+            border-radius: 6px;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
+        
         .watermark {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) rotate(-30deg);
-            font-size: 100px;
-            color: rgba(0,0,0,0.05);
-            font-weight: bold;
+            font-size: clamp(60px, 10vw, 140px);
+            color: rgba(0, 0, 0, 0.03);
+            font-weight: 900;
             white-space: nowrap;
             z-index: 0;
+            pointer-events: none;
         }
-        .timer-bar {
-            transition: width 1s linear;
+        
+        .certificate-text {
+            font-size: clamp(10px, 1.2vw, 16px);
         }
-        .progress-bar {
-            transition: width 0.5s ease;
+        
+        .certificate-title {
+            font-size: clamp(16px, 2.5vw, 36px);
         }
-        .quiz-option:hover {
-            background-color: rgba(255,255,255,0.1);
+        
+        .certificate-name {
+            font-size: clamp(20px, 3.5vw, 48px);
         }
-        .quiz-option.selected {
-            background-color: rgba(107, 71, 255, 0.3);
-            border-color: #6b47ff;
+        
+        .certificate-logo {
+            width: clamp(50px, 8vw, 100px);
+            height: clamp(50px, 8vw, 100px);
         }
-        @media (max-width: 480px) {
-  h1, h2, h3 {
-    font-size: 90%; /* scale down big headings */
-  }
-
-  button {
-    width: 100%; /* buttons stretch on small phones */
-  }
-
-  .category-card,
-  .card {
-    padding: 1rem;
-    width: 100% !important; /* stack neatly */
-  }
-
-  .container {
-    padding: 0 10px; /* reduce side spacing */
-  }
-}
-
-/* 👉 ADD STEP-1 FIX HERE (AT THE BOTTOM OF STYLE) */
-
-/* FIX CERTIFICATE WIDTH ON MOBILE */
-#certificate {
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 16px;
-  box-sizing: border-box;
-}
-
-/* On mobile, avoid shrinking too much */
-@media (max-width: 480px) {
-  #certificate {
-    max-width: 460px !important;
-    padding: 12px;
-  }
-}
-
-/* END OF STEP-1 FIX */
+        
+        .certificate-badge {
+            width: clamp(40px, 6vw, 80px);
+            height: clamp(40px, 6vw, 80px);
+        }
+        
+        @media (max-width: 768px) {
+            .certificate-border {
+                padding: 8px;
+            }
+            
+            .certificate-inner-border {
+                padding: 6px;
+            }
+        }
+        
+        /* FIXED-SIZE OFFSCREEN CERTIFICATE FOR PDF GENERATION */
+        /* This ensures consistent PDF output across all devices */
+        .certificate-pdf-container {
+            position: fixed;
+            left: -9999px;
+            top: 0;
+            width: 1122px;  /* A4 landscape width at 96 DPI (297mm) */
+            height: 794px;   /* A4 landscape height at 96 DPI (210mm) */
+            background: white;
+        }
+        
+        .certificate-pdf-border {
+            background: linear-gradient(135deg, #ec4899, #8b5cf6, #ec4899, #8b5cf6);
+            padding: 20px;
+            border-radius: 24px;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+        }
+        
+        .certificate-pdf-inner {
+            background: linear-gradient(135deg, #8b5cf6, #ec4899, #8b5cf6, #ec4899);
+            padding: 16px;
+            border-radius: 16px;
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+        }
+        
+        .certificate-pdf-content {
+            background: white;
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            width: 100%;
+            height: 100%;
+            padding: 40px 50px;
+            box-sizing: border-box;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        
+        .certificate-pdf-watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-30deg);
+            font-size: 180px;
+            color: rgba(0, 0, 0, 0.02);
+            font-weight: 900;
+            white-space: nowrap;
+            z-index: 0;
+            pointer-events: none;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .pdf-logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #ec4899, #8b5cf6);
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .pdf-badge {
+            width: 70px;
+            height: 70px;
+        }
+        
+        .pdf-heading {
+            font-size: 32px;
+            font-weight: bold;
+            color: #1f2937;
+            margin: 0;
+            font-family: 'Georgia', serif;
+        }
+        
+        .pdf-subheading {
+            font-size: 18px;
+            color: #6b7280;
+            margin: 4px 0 0 0;
+            font-family: 'Georgia', serif;
+            font-style: italic;
+        }
+        
+        .pdf-certificate-title {
+            font-size: 28px;
+            color: #1f2937;
+            margin: 20px 0 8px 0;
+            font-family: 'Georgia', serif;
+            font-weight: bold;
+        }
+        
+        .pdf-certifies {
+            font-size: 16px;
+            color: #6b7280;
+            margin: 0 0 12px 0;
+            font-family: 'Georgia', serif;
+            font-style: italic;
+        }
+        
+        .pdf-user-name {
+            font-size: 42px;
+            font-weight: bold;
+            color: #1f2937;
+            margin: 12px 0;
+            font-family: 'Georgia', serif;
+            border-bottom: 3px solid #e5e7eb;
+            display: inline-block;
+            padding-bottom: 4px;
+        }
+        
+        .pdf-description {
+            font-size: 14px;
+            color: #4b5563;
+            line-height: 1.6;
+            margin: 16px 0;
+            font-family: 'Georgia', serif;
+        }
+        
+        .pdf-details {
+            font-size: 13px;
+            color: #374151;
+            font-family: 'Georgia', serif;
+        }
+        
+        .pdf-details-heading {
+            font-size: 15px;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 8px;
+            font-family: 'Georgia', serif;
+        }
+        
+        .pdf-certified-mark {
+            font-size: 22px;
+            font-weight: bold;
+            color: #9ca3af;
+            margin: 20px 0;
+            font-family: 'Arial', sans-serif;
+            letter-spacing: 2px;
+        }
+        
+        .pdf-signature-line {
+            border-bottom: 2px solid #9ca3af;
+            width: 180px;
+            margin: 0 auto 8px auto;
+        }
+        
+        .pdf-signature-name {
+            font-size: 15px;
+            font-weight: bold;
+            color: #1f2937;
+            margin: 4px 0 2px 0;
+            font-family: 'Georgia', serif;
+        }
+        
+        .pdf-signature-title {
+            font-size: 12px;
+            color: #6b7280;
+            font-style: italic;
+            font-family: 'Georgia', serif;
+        }
+        
+        .rotate-in {
+            animation: rotateIn 0.8s ease-out;
+        }
+        
+        @keyframes rotateIn {
+            from { 
+                transform: rotate(-10deg) scale(0.8); 
+                opacity: 0; 
+            }
+            to { 
+                transform: rotate(0deg) scale(1); 
+                opacity: 1; 
+            }
+        }
     </style>
-</head>
-<body>
-    <!-- Main Container -->
-    <div id="app" class="min-h-screen w-full">
-        <!-- Login Screen -->
-        <div id="login-screen" class="min-h-screen gradient-bg flex flex-col items-center justify-center px-4 py-12">
-            <div class="w-full max-w-md bg-white rounded-xl shadow-lg p-8 fade-in">
-                <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">Communication Skills Assessment</h1>
-                <form id="login-form" class="space-y-6">
-                    <div>
-                        <label for="fullName" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                        <input type="text" id="fullName" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
-                    </div>
-                    <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                        <input type="email" id="email" required class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500">
-                    </div>
-                    <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-pink-500 text-white py-2 rounded-md font-medium hover:opacity-90 transition-opacity">Start Assessment</button>
-                </form>
-            </div>
-        </div>
-
-        <!-- Category Preview Screen -->
-        <div id="category-preview" class="hidden min-h-screen gradient-bg flex flex-col items-center justify-center px-4 py-12">
-            <div class="w-full max-w-4xl text-center mb-10 fade-in">
-                <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Communication Skills Assessment</h1>
-                <p class="text-xl text-gray-300">Explore the key areas we'll be evaluating</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-5xl mb-10">
-                <!-- Category 1 -->
-                <div class="category-card bg-gradient-to-br from-purple-600 to-indigo-700 rounded-xl p-6 text-white shadow-lg slide-in" style="animation-delay: 0.1s">
-                    <div class="flex items-center mb-4">
-                        <div class="bg-white p-3 rounded-full mr-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold">Listening Skills</h3>
-                    </div>
-                    <p class="text-gray-200">Evaluates your ability to comprehend, retain, and respond to information effectively.</p>
-                </div>
-                
-                <!-- Category 2 -->
-                <div class="category-card bg-gradient-to-br from-pink-500 to-red-500 rounded-xl p-6 text-white shadow-lg slide-in" style="animation-delay: 0.2s">
-                    <div class="flex items-center mb-4">
-                        <div class="bg-white p-3 rounded-full mr-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold">Verbal Clarity</h3>
-                    </div>
-                    <p class="text-gray-200">Measures how clearly and effectively you express ideas and information verbally.</p>
-                </div>
-                
-                <!-- Category 3 -->
-                <div class="category-card bg-gradient-to-br from-blue-500 to-teal-400 rounded-xl p-6 text-white shadow-lg slide-in" style="animation-delay: 0.3s">
-                    <div class="flex items-center mb-4">
-                        <div class="bg-white p-3 rounded-full mr-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold">Feedback Skills</h3>
-                    </div>
-                    <p class="text-gray-200">Assesses your ability to provide and receive constructive feedback appropriately.</p>
-                </div>
-                
-                <!-- Category 4 -->
-                <div class="category-card bg-gradient-to-br from-yellow-400 to-orange-500 rounded-xl p-6 text-white shadow-lg slide-in" style="animation-delay: 0.4s">
-                    <div class="flex items-center mb-4">
-                        <div class="bg-white p-3 rounded-full mr-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold">Interpersonal Communication</h3>
-                    </div>
-                    <p class="text-gray-200">Evaluates how well you communicate in one-on-one and group settings.</p>
-                </div>
-                
-                <!-- Category 5 -->
-                <div class="category-card bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl p-6 text-white shadow-lg slide-in" style="animation-delay: 0.5s">
-                    <div class="flex items-center mb-4">
-                        <div class="bg-white p-3 rounded-full mr-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold">Non-verbal Communication</h3>
-                    </div>
-                    <p class="text-gray-200">Measures your awareness and effectiveness with body language and visual cues.</p>
-                </div>
-                
-                <!-- Category 6 -->
-                <div class="category-card bg-gradient-to-br from-purple-500 to-violet-600 rounded-xl p-6 text-white shadow-lg slide-in" style="animation-delay: 0.6s">
-                    <div class="flex items-center mb-4">
-                        <div class="bg-white p-3 rounded-full mr-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-bold">Conflict Resolution</h3>
-                    </div>
-                    <p class="text-gray-200">Assesses your ability to navigate and resolve disagreements constructively.</p>
-                </div>
-            </div>
-            
-            <div class="w-full max-w-md text-center fade-in">
-                <button id="start-quiz-btn" class="px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-500 text-white rounded-full font-medium text-lg hover:opacity-90 transition-opacity shadow-lg">
-                    Start 20-Question Assessment
-                </button>
-                <p class="text-gray-300 mt-4">You'll have 15 minutes to complete all questions</p>
-            </div>
-        </div>
-
-        <!-- Quiz Screen -->
-        <div id="quiz-screen" class="hidden min-h-screen quiz-gradient-bg flex flex-col">
-            <!-- Quiz Header -->
-            <div class="p-4 md:p-6 flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-4 md:mb-0">
-                    <h2 class="text-2xl font-bold text-white">Communication Skills Assessment</h2>
-                    <p class="text-gray-300">Answer each question to the best of your ability</p>
-                </div>
-                <div class="flex flex-col items-end">
-                    <div class="flex items-center mb-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span id="timer" class="text-white font-medium">10:00</span>
-                    </div>
-                    <div class="w-full bg-gray-700 rounded-full h-2">
-                        <div id="timer-bar" class="timer-bar bg-gradient-to-r from-green-400 to-blue-500 h-2 rounded-full" style="width: 100%"></div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Quiz Progress -->
-            <div class="px-4 md:px-6 py-2">
-                <div class="flex justify-between items-center mb-1">
-                    <span class="text-sm text-gray-300">Question <span id="current-question">1</span> of 20</span>
-                    <span class="text-sm text-gray-300"><span id="progress-percent">5</span>% Complete</span>
-                </div>
-                <div class="w-full bg-gray-700 rounded-full h-2">
-                    <div id="progress-bar" class="progress-bar bg-gradient-to-r from-purple-500 to-pink-500 h-2 rounded-full" style="width: 5%"></div>
-                </div>
-            </div>
-            
-            <!-- Quiz Content -->
-            <div class="flex-grow flex items-center justify-center p-4 md:p-6">
-                <div id="question-container" class="w-full max-w-3xl bg-gray-800 bg-opacity-50 rounded-xl p-6 md:p-8 shadow-lg scale-in">
-                    <div id="question-icon" class="mx-auto mb-6 bg-gradient-to-br from-purple-500 to-pink-500 w-16 h-16 rounded-full flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                        </svg>
-                    </div>
-                    <h3 id="question-text" class="text-xl md:text-2xl font-medium text-white text-center mb-8">When someone is speaking to you, what do you typically focus on?</h3>
-                    
-                    <div id="options-container" class="space-y-4">
-                        <!-- Options will be dynamically generated -->
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Quiz Navigation -->
-            <div class="p-4 md:p-6 flex justify-between">
-                <button id="prev-btn" class="px-6 py-2 bg-gray-700 text-white rounded-lg font-medium hover:bg-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">Previous</button>
-                <button id="next-btn" class="px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-500 text-white rounded-lg font-medium hover:opacity-90 transition-opacity">Next</button>
-            </div>
-        </div>
-
-        <!-- Results Screen -->
-        <div id="results-screen" class="hidden min-h-screen quiz-gradient-bg flex flex-col">
-            <div class="p-4 md:p-6">
-                <h2 class="text-2xl md:text-3xl font-bold text-white text-center">Your Assessment Results</h2>
-                <p class="text-gray-300 text-center mb-8">Here's how you performed in the Communication Skills Assessment</p>
-                
-                <div class="w-full max-w-4xl mx-auto bg-gray-800 bg-opacity-50 rounded-xl p-6 md:p-8 shadow-lg mb-8">
-                    <div class="flex flex-col md:flex-row items-center justify-between mb-8">
-                        <div class="mb-6 md:mb-0">
-                            <h3 class="text-xl text-gray-300 mb-2">Total Score</h3>
-                            <div class="text-5xl font-bold text-white"><span id="total-score">0</span>/<span id="max-score">100</span></div>
-                        </div>
-                        <div class="w-full md:w-auto">
-                            <div id="score-gauge" class="w-40 h-40 mx-auto relative">
-                                <svg class="w-full h-full" viewBox="0 0 100 100">
-                                    <circle cx="50" cy="50" r="45" fill="none" stroke="#4B5563" stroke-width="10" />
-                                    <circle id="score-circle" cx="50" cy="50" r="45" fill="none" stroke-width="10" stroke-linecap="round" stroke-dasharray="283" stroke-dashoffset="283" transform="rotate(-90 50 50)" />
-                                </svg>
-                                <div class="absolute inset-0 flex items-center justify-center">
-                                    <span id="score-percentage" class="text-2xl font-bold text-white">0%</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <h3 class="text-xl text-white mb-4">Performance by Category</h3>
-                    <div id="category-results" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <!-- Category results will be dynamically generated -->
-                    </div>
-                </div>
-                
-                <div class="w-full max-w-md mx-auto bg-gray-800 bg-opacity-50 rounded-xl p-6 shadow-lg text-center">
-                    <h3 class="text-xl text-white mb-4">Get Your Certificate</h3>
-                    <p class="text-gray-300 mb-6">Complete the payment to receive your official Skillexa certification</p>
-                    
-                    <div class="mb-6">
-                              <div id="qr-code" class="w-48 h-48 mx-auto bg-white p-4 rounded-lg">
-                           <div class="flex justify-center my-4">
-  <img src="assets/images/pay99-qr.jpg" alt="Pay ₹99 QR Code" class="w-40 h-40 object-contain rounded-md shadow-md" />
-</div>
-                                <!-- Simple QR code SVG representation -->
-                                <rect x="10" y="10" width="80" height="80" fill="none" stroke="black" stroke-width="1" />
-                                <g fill="black">
-                                    <!-- QR code pattern - simplified representation -->
-                                    <rect x="20" y="20" width="20" height="20" />
-                                    <rect x="60" y="20" width="20" height="20" />
-                                    <rect x="20" y="60" width="20" height="20" />
-                                    <rect x="40" y="40" width="20" height="20" />
-                                    <rect x="65" y="65" width="10" height="10" />
-                                    <rect x="25" y="45" width="10" height="10" />
-                                    <rect x="45" y="25" width="10" height="10" />
-                                    <rect x="65" y="45" width="10" height="10" />
-                                    <rect x="45" y="65" width="10" height="10" />
-                                </g>
-                            </svg>
-                        </div>
-                        <p class="text-gray-300 mt-2">Scan to pay via UPI</p>
-                         <p class="text-white text-opacity-80 mt-2">1. Take a screenshot and go to your UPI ID.</p> 
-<p class="text-white text-opacity-80 mt-2"></p>2. Scan the QR code over there.</p>
-<p class="text-white text-opacity-80 mt-2"></p>3. Complete the payment and wait on our site.</p>  
-<p class="text-white text-opacity-80 mt-2"></p>4. Do NOT log out to get your certificate.</p>  
-<p class="text-white text-opacity-80 mt-2"></p>5. The download option will appear after a few minutes.</p>
-<p class="text-white text-opacity-80 mt-2"></p>6. Once you get the link, click to download your certificate.</p>  
-<p class="text-white text-opacity-80 mt-2"></p>7. Do NOT close the website while waiting.</p>
-                    </div>
-                    
-                    <!-- Simulated payment button for demo purposes -->
-                    <button id="simulate-payment-btn" class="w-full px-6 py-3 bg-gradient-to-r from-purple-500 to-indigo-500 text-white rounded-lg font-medium hover:opacity-90 transition-opacity">
-  Simulated payment
-</button>
-
-                </div>
-            </div>
-        </div>
-
-        <!-- Certificate Screen -->
-        <div id="certificate-screen" class="hidden min-h-screen bg-gray-100 p-4 md:p-8 flex flex-col items-center justify-center">
-            <div class="mb-6 text-center">
-                <h2 class="text-2xl md:text-3xl font-bold text-gray-800">Your Certificate is Ready!</h2>
-                <p class="text-gray-600">Your certificate has been generated and will download automatically</p>
-            </div>
-            
-            <!-- Certificate Preview -->
-            <div id="certificate" class="w-full max-w-5xl certificate-border rounded-lg shadow-xl">
-                <div class="certificate-inner-border rounded-lg">
-                    <div class="certificate-content p-8 rounded-lg">
-                        <div class="watermark">SKILLEXA</div>
-                        
-                        <div class="flex justify-between items-start mb-6 relative z-10">
-                            <!-- Logo placeholder -->
-                           <div class="w-16 h-16 rounded-md overflow-hidden mr-3 shadow-md">
-                            <img src="assets/logo.jpg" alt="Skillexa Logo" class="w-full h-full object-cover" />
-                            </div>
-                            <div class="flex items-center">
-                                <div class="text-right mr-4">
-                                    <h3 class="text-xl font-bold text-gray-800">CERTIFICATE</h3>
-                                    <p class="text-gray-600">OF ACHIEVEMENT</p>
-                                </div>
-                                <div class="w-12 h-12">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" class="w-full h-full">
-                                        <circle cx="48" cy="48" r="46" fill="#2196F3"/>
-                                        <path fill="#FFFFFF" d="M41,59.4l-12-12l-4.2,4.2L41,67.8l30.2-30.2l-4.2-4.2L41,59.4z"/>
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="text-center mb-8 relative z-10">
-                            <h2 class="handwriting text-4xl text-gray-800 mb-1">Certificate of Excellence</h2>
-                            <p class="text-gray-600">This certifies that</p>
-                            <h3 id="certificate-name" class="handwriting text-3xl text-gray-800 my-3">John Doe</h3>
-                            <p class="text-gray-600 max-w-lg mx-auto">has successfully completed the Communication Skills Assessment with outstanding performance and is hereby recognized for their achievement.</p>
-                        </div>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 relative z-10">
-                            <div>
-                                <h4 class="font-bold text-gray-800 mb-2">Assessment Details</h4>
-                                <div class="space-y-2">
-                                    <div class="flex items-center">
-                                        <span class="text-gray-600 w-32">Skill:</span>
-                                        <span class="font-medium text-gray-800">Communication Skills</span>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <span class="text-gray-600 w-32">Total Score:</span>
-                                        <span id="certificate-score" class="font-medium text-gray-800">85/100</span>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <span class="text-gray-600 w-32">Rank:</span>
-                                        <span id="certificate-rank" class="font-medium text-gray-800">Excellent</span>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <span class="text-gray-600 w-32">Date:</span>
-                                        <span id="certificate-date" class="font-medium text-gray-800">May 15, 2024</span>
-                                    </div>
-                                    <div class="flex items-center">
-                                        <span class="text-gray-600 w-32">Certificate ID:</span>
-                                        <span id="certificate-id" class="font-medium text-gray-800">SKX-123456</span>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <h4 class="font-bold text-gray-800 mb-2">Performance Breakdown</h4>
-                                <div id="certificate-categories" class="grid grid-cols-2 gap-2">
-                                    <!-- Will be populated dynamically -->
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="text-center my-4 relative z-10">
-                            <div class="handwriting text-2xl font-bold text-gray-400">SKILLEXA CERTIFIED 2025</div>
-                        </div>
-                        
-                        <div class="flex justify-between items-end mt-8 relative z-10">
-                            <div class="text-center">
-                                 <img src="assets/images/khushi.png" alt="Signature" class="mx-auto mb-2" style="height: 30px; contain;" />
-                             
-                                <div class="w-40 border-b border-gray-400 mb-1"></div>
-                                <p class="text-gray-800 font-medium">Jagdeep Kaur I</p>
-                                <p class="text-gray-600 text-sm">Founder</p>
-                            </div>
-                            
-                            <div class="text-center">
-                              <img src="assets/images/srushti.jpg" alt="Signature" class="mx-auto mb-2" style="height: 30px; contain;" />
-                                <div class="w-40 border-b border-gray-400 mb-1"></div>
-                                <p class="text-gray-800 font-medium">Prajapati Srushti K</p>
-                                <p class="text-gray-600 text-sm">Co-Founder</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="mt-8">
-                <button id="download-again-btn" class="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-500 text-white rounded-lg font-medium hover:opacity-90 transition-opacity">
-                    Download Certificate
-                </button>
-            </div>
-        </div>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full">
+  <main id="app" class="w-full h-full"><!-- Login Screen -->
+   <section id="login-screen" class="min-h-screen black-gradient flex flex-col items-center justify-center px-4 py-12">
+    <div class="w-full max-w-md bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl shadow-2xl p-8 fade-in floating">
+     <div class="text-center mb-8">
+      <div class="inline-block bg-gradient-to-r from-purple-500 to-pink-500 p-4 rounded-full mb-4"><span class="text-5xl">💬</span>
+      </div>
+      <h1 class="text-4xl font-bold text-white glow-text mb-2">Communication Skills</h1>
+      <h2 class="text-2xl font-semibold text-white glow-text">Assessment System</h2>
+      <p class="text-white text-opacity-90 mt-3">Master the art of effective communication</p>
+     </div>
+     <form id="login-form" class="space-y-6">
+      <div><label for="fullName" class="block text-sm font-medium text-white mb-2">Full Name</label> <input type="text" id="fullName" required class="w-full px-4 py-3 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 text-white placeholder-white placeholder-opacity-60" placeholder="Enter your full name">
+      </div>
+      <div><label for="email" class="block text-sm font-medium text-white mb-2">Email Address</label> <input type="email" id="email" required class="w-full px-4 py-3 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400 text-white placeholder-white placeholder-opacity-60" placeholder="Enter your email">
+      </div><button type="submit" class="w-full bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 text-white py-4 rounded-lg font-semibold text-lg hover:opacity-90 transition-all transform hover:scale-105 shadow-lg shimmer"> 🚀 Begin Assessment </button>
+     </form>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Quiz questions data
-            const quizQuestions = [
-                {
-                    category: "Listening Skills",
-                    question: "When someone is speaking to you, what do you typically focus on?",
-                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                          </svg>`,
-                    options: [
-                        "Their words only",
-                        "Their words and body language",
-                        "Thinking about what I'll say next",
-                        "Their words, tone, and non-verbal cues"
-                    ],
-                    correctAnswer: 3
-                },
-                {
-                    category: "Verbal Clarity",
-                    question: "How do you typically structure your explanations of complex topics?",
-                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                          </svg>`,
-                    options: [
-                        "I dive straight into details",
-                        "I start with an overview, then provide details with examples",
-                        "I use technical terms to sound knowledgeable",
-                        "I keep explanations brief to save time"
-                    ],
-                    correctAnswer: 1
-                },
-                {
-                    category: "Feedback Skills",
-                    question: "When providing feedback to a colleague, which approach do you typically take?",
-                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-                          </svg>`,
-                    options: [
-                        "I focus only on what needs improvement",
-                        "I sandwich criticism between compliments",
-                        "I provide specific examples and actionable suggestions",
-                        "I avoid giving negative feedback to maintain relationships"
-                    ],
-                    correctAnswer: 2
-                },
-                {
-                    category: "Interpersonal Communication",
-                    question: "In a group discussion, how do you typically participate?",
-                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                          </svg>`,
-                    options: [
-                        "I dominate the conversation to ensure my ideas are heard",
-                        "I listen to others and build on their ideas",
-                        "I prefer to observe and speak only when necessary",
-                        "I focus on convincing others that my viewpoint is correct"
-                    ],
-                    correctAnswer: 1
-                },
-                {
-                    category: "Non-verbal Communication",
-                    question: "How aware are you of your body language during conversations?",
-                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                          </svg>`,
-                    options: [
-                        "I'm constantly aware and adjust it intentionally",
-                        "I'm somewhat aware but don't focus on it much",
-                        "I rarely think about my body language",
-                        "I only consider it in formal situations"
-                    ],
-                    correctAnswer: 0
-                },
-                {
-                    category: "Conflict Resolution",
-                    question: "When faced with a disagreement, what is your typical approach?",
-                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                          </svg>`,
-                    options: [
-                        "I avoid the conflict entirely",
-                        "I stand my ground and push for my perspective",
-                        "I seek to understand all viewpoints and find common ground",
-                        "I defer to others to maintain harmony"
-                    ],
-                    correctAnswer: 2
-                },
-                {
-                    category: "Listening Skills",
-                    question: "How do you ensure you've understood someone correctly?",
-                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                          </svg>`,
-                    options: [
-                        "I assume I've understood if it makes sense to me",
-                        "I paraphrase what they said to confirm understanding",
-                        "I ask others later to clarify what was meant",
-                        "I nod and agree even if I'm unsure"
-                    ],
-                    correctAnswer: 1
-                },
-                {
-                    category: "Verbal Clarity",
-                    question: "When explaining technical concepts to non-experts, you typically:",
-                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                          </svg>`,
-                    options: [
-                        "Use the same technical terms you would with experts",
-                        "Use analogies and everyday examples to illustrate concepts",
-                        "Simplify by omitting important but complex details",
-                        "Suggest they learn the technical terms first"
-                    ],
-                    correctAnswer: 1
-                },
-                {
-                    category: "Feedback Skills",
-                    question: "When receiving constructive criticism, you typically:",
-                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-                          </svg>`,
-                    options: [
-                        "Become defensive and explain why they're wrong",
-                        "Listen attentively and ask clarifying questions",
-                        "Feel hurt but don't show it",
-                        "Immediately promise to change everything mentioned"
-                    ],
-                    correctAnswer: 1
-                },
-                {
-                    category: "Interpersonal Communication",
-                    question: "When communicating with someone from a different cultural background, you:",
-                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                          </svg>`,
-                    options: [
-                        "Communicate exactly as you would with anyone else",
-                        "Are aware of potential cultural differences and adjust accordingly",
-                        "Speak louder and slower to ensure understanding",
-                        "Avoid communication to prevent misunderstandings"
-                    ],
-                    correctAnswer: 1
-                },
-                {
-                    category: "Non-verbal Communication",
-                    question: "Which statement best describes your awareness of others' non-verbal cues?",
-                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                          </svg>`,
-                    options: [
-                        "I notice subtle changes in facial expressions and body language",
-                        "I focus primarily on words and tone of voice",
-                        "I rarely pay attention to non-verbal cues",
-                        "I only notice very obvious non-verbal signals"
-                    ],
-                    correctAnswer: 0
-                },
-                {
-                    category: "Conflict Resolution",
-                    question: "In a heated discussion, you typically:",
-                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                          </svg>`,
-                    options: [
-                        "Raise your voice to ensure your point is heard",
-                        "Walk away until everyone calms down",
-                        "Maintain a calm tone and focus on the issue, not personalities",
-                        "Agree with others to end the discussion quickly"
-                    ],
-                    correctAnswer: 2
-                },
-                {
-                    category: "Listening Skills",
-                    question: "During a conversation, how often do you interrupt others?",
-                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                          </svg>`,
-                    options: [
-                        "Frequently, when I have an important point",
-                        "Sometimes, when I might forget my thought",
-                        "Rarely, I wait for appropriate pauses",
-                        "Never, even if it means forgetting my point"
-                    ],
-                    correctAnswer: 2
-                },
-                {
-                    category: "Verbal Clarity",
-                    question: "When giving directions or instructions, you typically:",
-                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                          </svg>`,
-                    options: [
-                        "Provide detailed step-by-step guidance",
-                        "Give a quick overview and let people figure out details",
-                        "Demonstrate rather than explain",
-                        "Provide written instructions to avoid confusion"
-                    ],
-                    correctAnswer: 0
-                },
-                {
-                    category: "Feedback Skills",
-                    question: "How do you typically respond to feedback that you disagree with?",
-                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-                          </svg>`,
-                    options: [
-                        "Immediately explain why the feedback is incorrect",
-                        "Consider it carefully before responding",
-                        "Ignore it and continue with your approach",
-                        "Accept it outwardly but don't change your behavior"
-                    ],
-                    correctAnswer: 1
-                },
-                {
-                    category: "Interpersonal Communication",
-                    question: "When working in a team, how do you typically handle different communication styles?",
-                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                          </svg>`,
-                    options: [
-                        "Expect everyone to adapt to your preferred style",
-                        "Adapt your style to match each team member",
-                        "Establish a single communication protocol for everyone",
-                        "Avoid team members with different communication styles"
-                    ],
-                    correctAnswer: 1
-                },
-                {
-                    category: "Non-verbal Communication",
-                    question: "During virtual meetings, how do you compensate for limited non-verbal cues?",
-                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                          </svg>`,
-                    options: [
-                        "I don't do anything differently than in-person",
-                        "I use more expressive vocal tones and facial expressions",
-                        "I rely solely on written chat features",
-                        "I avoid virtual meetings whenever possible"
-                    ],
-                    correctAnswer: 1
-                },
-                {
-                    category: "Conflict Resolution",
-                    question: "When mediating a conflict between others, you typically:",
-                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                          </svg>`,
-                    options: [
-                        "Take sides with whoever you think is right",
-                        "Remain neutral and help both parties express their views",
-                        "Tell them to resolve it themselves",
-                        "Find a quick compromise to end the conflict"
-                    ],
-                    correctAnswer: 1
-                },
-                {
-                    category: "Listening Skills",
-                    question: "How do you handle distractions when someone is speaking to you?",
-                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                          </svg>`,
-                    options: [
-                        "I multitask and divide my attention",
-                        "I acknowledge the distraction and refocus on the speaker",
-                        "I pretend to listen while thinking about other things",
-                        "I ask the speaker to wait until the distraction passes"
-                    ],
-                    correctAnswer: 1
-                },
-                {
-                    category: "Verbal Clarity",
-                    question: "When communicating complex information, you typically:",
-                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                          </svg>`,
-                    options: [
-                        "Present all information at once for efficiency",
-                        "Break it down into manageable chunks with clear transitions",
-                        "Use complex vocabulary to sound authoritative",
-                        "Keep explanations brief to avoid confusion"
-                    ],
-                    correctAnswer: 1
-                },
-                {
-                    category: "Feedback Skills",
-                    question: "How often do you seek feedback on your own communication?",
-                    icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-                          </svg>`,
-                    options: [
-                        "Regularly, as part of my continuous improvement",
-                        "Occasionally, when I think there might be an issue",
-                        "Rarely, only after a communication breakdown",
-                        "Never, I assume I'm communicating effectively"
-                    ],
-                    correctAnswer: 0
-                }
-            ];
-
-            // Variables to track quiz state
-            let currentUser = {
-                name: "",
-                email: ""
-            };
-            let currentQuestionIndex = 0;
-            let userAnswers = new Array(quizQuestions.length).fill(null);
-            let quizTimer;
-            let timeRemaining = 1 * 60; // 10 minutes in seconds
-
-            // DOM elements
-            const loginScreen = document.getElementById('login-screen');
-            const categoryPreview = document.getElementById('category-preview');
-            const quizScreen = document.getElementById('quiz-screen');
-            const resultsScreen = document.getElementById('results-screen');
-            const certificateScreen = document.getElementById('certificate-screen');
-            
-            const loginForm = document.getElementById('login-form');
-            const startQuizBtn = document.getElementById('start-quiz-btn');
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
-            const simulatePaymentBtn = document.getElementById('simulate-payment-btn');
-            const downloadAgainBtn = document.getElementById('download-again-btn');
-            
-            const questionContainer = document.getElementById('question-container');
-            const questionIcon = document.getElementById('question-icon');
-            const questionText = document.getElementById('question-text');
-            const optionsContainer = document.getElementById('options-container');
-            const currentQuestionElement = document.getElementById('current-question');
-            const progressPercentElement = document.getElementById('progress-percent');
-            const progressBarElement = document.getElementById('progress-bar');
-            const timerElement = document.getElementById('timer');
-            const timerBarElement = document.getElementById('timer-bar');
-
-            // Event listeners
-            loginForm.addEventListener('submit', handleLogin);
-            startQuizBtn.addEventListener('click', startQuiz);
-            prevBtn.addEventListener('click', showPreviousQuestion);
-            nextBtn.addEventListener('click', handleNextQuestion);
-            simulatePaymentBtn.addEventListener('click', handlePayment);
-            downloadAgainBtn.addEventListener('click', downloadCertificate);
-
-            // Functions
-            function handleLogin(e) {
-                e.preventDefault();
-                currentUser.name = document.getElementById('fullName').value;
-                currentUser.email = document.getElementById('email').value;
-                
-                // Store user info in localStorage
-                localStorage.setItem('userName', currentUser.name);
-                localStorage.setItem('userEmail', currentUser.email);
-                
-                // Show category preview
-                loginScreen.classList.add('hidden');
-                categoryPreview.classList.remove('hidden');
+   </section><!-- Category Preview Screen -->
+   <section id="category-preview" class="hidden min-h-screen black-gradient flex flex-col items-center justify-center px-4 py-12 overflow-auto">
+    <div class="w-full max-w-6xl text-center mb-12 fade-in">
+     <h1 class="text-5xl md:text-6xl font-bold text-white mb-4 glow-text">📊 Communication Skills Assessment</h1>
+     <p class="text-xl md:text-2xl text-white text-opacity-90">Evaluate your mastery across 6 key communication areas</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-7xl mb-12 px-4"><!-- Category 1: Listening Skills -->
+     <article class="category-card bg-gradient-to-br from-blue-500 to-blue-700 bg-opacity-20 backdrop-blur-md rounded-2xl p-8 text-white shadow-2xl slide-in pulse-glow" style="animation-delay: 0.1s">
+      <div class="flex flex-col items-center text-center">
+       <div class="bg-gradient-to-br from-blue-400 to-blue-600 p-4 rounded-full mb-4 floating shadow-lg"><span class="text-4xl">🎧</span>
+       </div>
+       <h3 class="text-2xl font-bold mb-3 glow-text">Listening Skills</h3>
+       <p class="text-white text-opacity-90 leading-relaxed">Master active listening, comprehension, and understanding diverse accents and speech patterns effectively.</p>
+      </div>
+     </article><!-- Category 2: Verbal Clarity -->
+     <article class="category-card bg-gradient-to-br from-green-500 to-green-700 bg-opacity-20 backdrop-blur-md rounded-2xl p-8 text-white shadow-2xl slide-in pulse-glow" style="animation-delay: 0.2s">
+      <div class="flex flex-col items-center text-center">
+       <div class="bg-gradient-to-br from-green-400 to-green-600 p-4 rounded-full mb-4 floating shadow-lg"><span class="text-4xl">🗣️</span>
+       </div>
+       <h3 class="text-2xl font-bold mb-3 glow-text">Verbal Clarity</h3>
+       <p class="text-white text-opacity-90 leading-relaxed">Enhance pronunciation, articulation, and effective verbal communication techniques for clear expression.</p>
+      </div>
+     </article><!-- Category 3: Feedback & Response -->
+     <article class="category-card bg-gradient-to-br from-purple-500 to-purple-700 bg-opacity-20 backdrop-blur-md rounded-2xl p-8 text-white shadow-2xl slide-in pulse-glow" style="animation-delay: 0.3s">
+      <div class="flex flex-col items-center text-center">
+       <div class="bg-gradient-to-br from-purple-400 to-purple-600 p-4 rounded-full mb-4 floating shadow-lg"><span class="text-4xl">💬</span>
+       </div>
+       <h3 class="text-2xl font-bold mb-3 glow-text">Feedback &amp; Response</h3>
+       <p class="text-white text-opacity-90 leading-relaxed">Provide constructive feedback and respond appropriately in professional and personal conversations.</p>
+      </div>
+     </article><!-- Category 4: Non-Verbal Communication -->
+     <article class="category-card bg-gradient-to-br from-yellow-500 to-yellow-700 bg-opacity-20 backdrop-blur-md rounded-2xl p-8 text-white shadow-2xl slide-in pulse-glow" style="animation-delay: 0.4s">
+      <div class="flex flex-col items-center text-center">
+       <div class="bg-gradient-to-br from-yellow-400 to-yellow-600 p-4 rounded-full mb-4 floating shadow-lg"><span class="text-4xl">👋</span>
+       </div>
+       <h3 class="text-2xl font-bold mb-3 glow-text">Non-Verbal Communication</h3>
+       <p class="text-white text-opacity-90 leading-relaxed">Master body language, gestures, and visual cues that enhance communication effectiveness.</p>
+      </div>
+     </article><!-- Category 5: Cultural Awareness -->
+     <article class="category-card bg-gradient-to-br from-red-500 to-red-700 bg-opacity-20 backdrop-blur-md rounded-2xl p-8 text-white shadow-2xl slide-in pulse-glow" style="animation-delay: 0.5s">
+      <div class="flex flex-col items-center text-center">
+       <div class="bg-gradient-to-br from-red-400 to-red-600 p-4 rounded-full mb-4 floating shadow-lg"><span class="text-4xl">🤝</span>
+       </div>
+       <h3 class="text-2xl font-bold mb-3 glow-text">Cultural Awareness</h3>
+       <p class="text-white text-opacity-90 leading-relaxed">Understand cultural nuances and adapt communication styles for diverse global audiences.</p>
+      </div>
+     </article><!-- Category 6: Written Communication -->
+     <article class="category-card bg-gradient-to-br from-pink-500 to-pink-700 bg-opacity-20 backdrop-blur-md rounded-2xl p-8 text-white shadow-2xl slide-in pulse-glow" style="animation-delay: 0.6s">
+      <div class="flex flex-col items-center text-center">
+       <div class="bg-gradient-to-br from-pink-400 to-pink-600 p-4 rounded-full mb-4 floating shadow-lg"><span class="text-4xl">✍️</span>
+       </div>
+       <h3 class="text-2xl font-bold mb-3 glow-text">Written Communication</h3>
+       <p class="text-white text-opacity-90 leading-relaxed">Develop clear, concise writing skills for emails, reports, and professional documentation.</p>
+      </div>
+     </article>
+    </div>
+    <div class="w-full max-w-xl text-center fade-in px-4"><button id="start-quiz-btn" class="px-10 py-5 bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 text-white rounded-full font-bold text-xl hover:opacity-90 transition-all transform hover:scale-110 shadow-2xl shimmer bounce-in"> ���� Start 20-Question Assessment </button>
+     <p class="text-white text-opacity-90 mt-6 text-lg">⏰ You have 10-15 minutes to complete all questions</p>
+    </div>
+   </section><!-- Quiz Screen -->
+   <section id="quiz-screen" class="hidden min-h-screen quiz-gradient flex flex-col"><!-- Quiz Header -->
+    <header class="p-6 md:p-8">
+     <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="text-center md:text-left">
+       <h2 class="text-3xl md:text-4xl font-bold text-white glow-text">💬 Communication Skills Assessment</h2>
+       <p class="text-white text-opacity-90 mt-1">Answer each question thoughtfully</p>
+      </div>
+      <div class="flex flex-col items-end gap-2">
+       <div class="flex items-center gap-3"><span class="text-3xl">⏰</span> <span id="timer" class="text-white font-bold text-2xl">12:00</span>
+       </div>
+       <div class="w-32 bg-white bg-opacity-30 rounded-full h-3">
+        <div id="timer-bar" class="timer-bar bg-gradient-to-r from-green-400 to-blue-500 h-3 rounded-full" style="width: 100%"></div>
+       </div>
+      </div>
+     </div>
+    </header><!-- Quiz Progress -->
+    <div class="px-6 md:px-8 py-3">
+     <div class="flex justify-between items-center mb-2"><span class="text-white font-medium">Question <span id="current-question">1</span> of 20</span> <span class="text-white font-medium"><span id="progress-percent">5</span>% Complete</span>
+     </div>
+     <div class="w-full bg-white bg-opacity-30 rounded-full h-4">
+      <div id="progress-bar" class="progress-bar bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 h-4 rounded-full" style="width: 5%"></div>
+     </div>
+    </div><!-- Quiz Content -->
+    <div class="flex-grow flex items-center justify-center p-6 md:p-8">
+     <div id="question-container" class="w-full max-w-5xl bg-white bg-opacity-15 backdrop-blur-lg rounded-2xl p-8 md:p-10 shadow-2xl scale-in">
+      <div id="question-icon" class="mx-auto mb-6 bg-gradient-to-br from-purple-500 to-pink-500 w-24 h-24 rounded-full flex items-center justify-center text-4xl floating shadow-lg">
+       🎧
+      </div>
+      <h3 id="question-text" class="text-2xl md:text-3xl font-semibold text-white text-center mb-10 glow-text leading-relaxed">Which technique is most effective for improving listening comprehension?</h3>
+      <div id="options-container" class="space-y-5"><!-- Options will be dynamically generated -->
+      </div>
+     </div>
+    </div><!-- Quiz Navigation -->
+    <nav class="p-6 md:p-8 flex justify-between"><button id="prev-btn" class="px-8 py-4 bg-white bg-opacity-20 text-white rounded-xl font-semibold hover:bg-opacity-30 transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed backdrop-blur-sm">⬅️ Previous</button> <button id="next-btn" class="px-8 py-4 bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 text-white rounded-xl font-semibold hover:opacity-90 transition-all transform hover:scale-105 shimmer shadow-lg">Next ➡️</button>
+    </nav>
+   </section><!-- Results Screen -->
+   <section id="results-screen" class="hidden min-h-screen quiz-gradient flex flex-col overflow-auto">
+    <div class="p-6 md:p-10">
+     <div class="text-center mb-8">
+      <h2 class="text-4xl md:text-5xl font-bold text-white glow-text mb-3">🏆 Assessment Results</h2>
+      <p class="text-white text-opacity-90 text-lg md:text-xl">Here's your comprehensive performance analysis</p>
+     </div>
+     <div class="w-full max-w-6xl mx-auto bg-white bg-opacity-15 backdrop-blur-lg rounded-2xl p-8 md:p-10 shadow-2xl mb-8">
+      <div class="flex flex-col lg:flex-row items-center justify-between gap-8 mb-10">
+       <div class="text-center lg:text-left">
+        <h3 class="text-2xl text-white mb-3 font-semibold">Total Score</h3>
+        <div class="text-7xl md:text-8xl font-bold text-white glow-text"><span id="total-score">0</span>/<span id="max-score">100</span>
+        </div>
+        <p class="text-white text-opacity-90 mt-3 text-lg">Communication Skills Assessment</p>
+       </div>
+       <div class="w-full lg:w-auto">
+        <div id="score-gauge" class="w-56 h-56 mx-auto relative">
+         <svg class="w-full h-full" viewbox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="8" /> <circle id="score-circle" cx="50" cy="50" r="45" fill="none" stroke-width="8" stroke-linecap="round" stroke-dasharray="283" stroke-dashoffset="283" transform="rotate(-90 50 50)" style="transition: stroke-dashoffset 1.5s ease-in-out;" />
+         </svg>
+         <div class="absolute inset-0 flex items-center justify-center"><span id="score-percentage" class="text-5xl font-bold text-white glow-text">0%</span>
+         </div>
+        </div>
+       </div>
+      </div>
+      <h3 class="text-3xl text-white mb-8 glow-text font-bold text-center">📊 Category Performance</h3>
+      <div id="category-results" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"><!-- Category results will be dynamically generated -->
+      </div>
+     </div>
+     <div class="w-full max-w-lg mx-auto bg-white bg-opacity-15 backdrop-blur-lg rounded-2xl p-8 shadow-2xl text-center">
+      <h3 class="text-2xl md:text-3xl text-white mb-4 glow-text font-bold">🎓 Get Your Certificate</h3>
+      <p class="text-white text-opacity-90 mb-6 text-lg">Complete the payment to receive your official Skillexa certification</p>
+      <div class="mb-8">
+       <div id="qr-code" class="w-56 h-56 mx-auto bg-white p-5 rounded-2xl shadow-2xl">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 100 100" class="w-full h-full"><rect x="5" y="5" width="90" height="90" fill="none" stroke="black" stroke-width="1" /> <g fill="black">
+          <rect x="15" y="15" width="25" height="25" />
+          <rect x="60" y="15" width="25" height="25" />
+          <rect x="15" y="60" width="25" height="25" />
+          <rect x="45" y="45" width="15" height="15" />
+          <rect x="70" y="70" width="10" height="10" />
+          <rect x="25" y="50" width="8" height="8" />
+          <rect x="50" y="25" width="8" height="8" />
+          <rect x="70" y="50" width="8" height="8" />
+          <rect x="50" y="70" width="8" height="8" />
+          <rect x="35" y="35" width="5" height="5" />
+          <rect x="75" y="35" width="5" height="5" />
+          <rect x="35" y="75" width="5" height="5" />
+         </g>
+        </svg>
+       </div>
+       <p class="text-white text-opacity-90 mt-4 text-base">📱 Scan to pay via UPI (Google Pay, PhonePe, etc.)</p>
+      </div><button id="simulate-payment-btn" class="w-full px-6 py-4 bg-gray-500 text-white rounded-xl font-semibold text-lg cursor-not-allowed transition-all" disabled> <span id="payment-btn-text">Please wait <span id="countdown">60</span>s before payment</span> </button>
+     </div>
+    </div>
+   </section><!-- Certificate Screen -->
+   <section id="certificate-screen" class="hidden min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 p-4 md:p-8 flex flex-col items-center justify-center overflow-auto">
+    <div class="mb-8 text-center">
+     <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">🎉 Your Certificate is Ready!</h2>
+     <p class="text-gray-600 text-lg">Your certificate will download automatically</p>
+    </div><!-- Responsive Certificate Preview (visible to user) -->
+    <div class="certificate-container">
+     <div id="certificate" class="certificate-border">
+      <div class="certificate-inner-border">
+       <div class="certificate-content p-4 md:p-8">
+        <div class="watermark">
+         SKILLEXA
+        </div>
+        <div class="relative z-10 h-full flex flex-col justify-between"><!-- Certificate Header -->
+         <div class="flex justify-between items-start mb-4">
+          <div class="certificate-logo bg-gradient-to-br from-pink-500 to-violet-600 rounded-full flex items-center justify-center flex-shrink-0"><span class="text-white font-bold certificate-text">SKILLEXA</span>
+          </div>
+          <div class="flex items-center gap-2 md:gap-4">
+           <div class="text-right">
+            <h3 class="certificate-title font-bold text-gray-800" style="font-family: Georgia, serif;">CERTIFICATE</h3>
+            <p class="certificate-text text-gray-600" style="font-family: Georgia, serif; font-style: italic;">OF ACHIEVEMENT</p>
+           </div>
+           <div class="certificate-badge flex-shrink-0"><img src="https://img.icons8.com/color/96/verified-badge.png" alt="Verified" class="w-full h-full" onerror="this.style.background='linear-gradient(135deg, #10B981, #059669)'; this.style.borderRadius='50%'; this.alt='✅';">
+           </div>
+          </div>
+         </div><!-- Certificate Body -->
+         <div class="flex-grow flex flex-col justify-center text-center mb-4">
+          <h2 class="certificate-title text-gray-800 mb-2" style="font-family: Georgia, serif;">Certificate of Excellence</h2>
+          <p class="certificate-text text-gray-600 mb-2" style="font-family: Georgia, serif; font-style: italic;">This certifies that</p>
+          <h3 id="certificate-name" class="certificate-name text-gray-800 my-3 font-bold" style="font-family: Georgia, serif;">John Doe</h3>
+          <p class="certificate-text text-gray-600 max-w-3xl mx-auto px-4 leading-relaxed" style="font-family: Georgia, serif;">has successfully completed the Communication Skills Assessment with outstanding performance and is hereby recognized for exceptional achievement.</p>
+         </div><!-- Certificate Details Grid -->
+         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 mb-4">
+          <div>
+           <h4 class="certificate-text font-bold text-gray-800 mb-2" style="font-family: Georgia, serif;">Assessment Details</h4>
+           <div class="space-y-1">
+            <div class="flex items-center justify-between"><span class="certificate-text text-gray-600" style="font-family: Georgia, serif;">Skill:</span> <span class="certificate-text font-medium text-gray-800" style="font-family: Georgia, serif;">Communication Skills</span>
+            </div>
+            <div class="flex items-center justify-between"><span class="certificate-text text-gray-600" style="font-family: Georgia, serif;">Score:</span> <span id="certificate-score" class="certificate-text font-medium text-gray-800" style="font-family: Georgia, serif;">85/100</span>
+            </div>
+            <div class="flex items-center justify-between"><span class="certificate-text text-gray-600" style="font-family: Georgia, serif;">Rank:</span> <span id="certificate-rank" class="certificate-text font-medium text-gray-800" style="font-family: Georgia, serif;">Excellent</span>
+            </div>
+            <div class="flex items-center justify-between"><span class="certificate-text text-gray-600" style="font-family: Georgia, serif;">Date:</span> <span id="certificate-date" class="certificate-text font-medium text-gray-800" style="font-family: Georgia, serif;">Jan 1, 2025</span>
+            </div>
+            <div class="flex items-center justify-between"><span class="certificate-text text-gray-600" style="font-family: Georgia, serif;">ID:</span> <span id="certificate-id" class="certificate-text font-medium text-gray-800" style="font-family: Georgia, serif;">SKX-123456</span>
+            </div>
+           </div>
+          </div>
+          <div>
+           <h4 class="certificate-text font-bold text-gray-800 mb-2" style="font-family: Georgia, serif;">Performance</h4>
+           <div id="certificate-categories" class="space-y-1"><!-- Categories will be added dynamically -->
+           </div>
+          </div>
+         </div><!-- Certification Mark -->
+         <div class="text-center my-3">
+          <div class="certificate-title font-bold text-gray-400" style="font-family: Arial, sans-serif; letter-spacing: 2px;">
+           SKILLEXA CERTIFIED 2025
+          </div>
+         </div><!-- Signatures -->
+         <div class="flex justify-between items-end gap-4">
+          <div class="text-center flex-1">
+           <div class="border-b-2 border-gray-400 mb-1 mx-auto" style="max-width: 150px;"></div>
+           <p class="certificate-text text-gray-800 font-bold" style="font-family: Georgia, serif;">Jagdeep Kaur I</p>
+           <p class="certificate-text text-gray-600" style="font-family: Georgia, serif; font-style: italic;">Founder</p>
+          </div>
+          <div class="text-center flex-1">
+           <div class="border-b-2 border-gray-400 mb-1 mx-auto" style="max-width: 150px;"></div>
+           <p class="certificate-text text-gray-800 font-bold" style="font-family: Georgia, serif;">Prajapathi Srushti K</p>
+           <p class="certificate-text text-gray-600" style="font-family: Georgia, serif; font-style: italic;">Co-Founder</p>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class="mt-8"><button id="download-again-btn" class="px-10 py-4 bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 text-white rounded-xl font-bold text-lg hover:opacity-90 transition-all transform hover:scale-105 shimmer shadow-lg"> 📥 Download Certificate Again </button>
+    </div>
+   </section><!-- FIXED-SIZE OFFSCREEN CERTIFICATE FOR PDF GENERATION --> <!-- This hidden container is used ONLY for generating the PDF --> <!-- It has fixed dimensions (A4 landscape at 96 DPI) regardless of screen size -->
+   <div id="certificate-pdf" class="certificate-pdf-container">
+    <div class="certificate-pdf-border">
+     <div class="certificate-pdf-inner">
+      <div class="certificate-pdf-content"><!-- Watermark -->
+       <div class="certificate-pdf-watermark">
+        SKILLEXA
+       </div><!-- Content with z-index to appear above watermark -->
+       <div style="position: relative; z-index: 10; height: 100%; display: flex; flex-direction: column; justify-content: space-between;"><!-- Header Section -->
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
+         <div class="pdf-logo">
+          SKILLEXA
+         </div>
+         <div style="display: flex; align-items: center; gap: 20px;">
+          <div style="text-align: right;">
+           <h3 class="pdf-heading">CERTIFICATE</h3>
+           <p class="pdf-subheading">OF ACHIEVEMENT</p>
+          </div>
+          <div class="pdf-badge"><img src="https://img.icons8.com/color/96/verified-badge.png" alt="Verified" style="width: 100%; height: 100%; border-radius: 50%;" onerror="this.style.background='linear-gradient(135deg, #10B981, #059669)'; this.alt='✅';">
+          </div>
+         </div>
+        </div><!-- Main Certificate Body -->
+        <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center; text-align: center;">
+         <h2 class="pdf-certificate-title">Certificate of Excellence</h2>
+         <p class="pdf-certifies">This certifies that</p>
+         <h3 id="pdf-user-name" class="pdf-user-name">John Doe</h3>
+         <p class="pdf-description" style="max-width: 750px; margin: 16px auto;">has successfully completed the Communication Skills Assessment with outstanding performance and is hereby recognized for exceptional achievement in demonstrating professional communication competencies.</p>
+        </div><!-- Details Section -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 20px;"><!-- Left Column: Assessment Details -->
+         <div>
+          <h4 class="pdf-details-heading">Assessment Details</h4>
+          <div style="display: flex; flex-direction: column; gap: 6px;">
+           <div style="display: flex; justify-content: space-between;"><span class="pdf-details">Skill:</span> <span class="pdf-details" style="font-weight: 600;">Communication Skills</span>
+           </div>
+           <div style="display: flex; justify-content: space-between;"><span class="pdf-details">Score:</span> <span id="pdf-score" class="pdf-details" style="font-weight: 600;">85/100</span>
+           </div>
+           <div style="display: flex; justify-content: space-between;"><span class="pdf-details">Rank:</span> <span id="pdf-rank" class="pdf-details" style="font-weight: 600;">Excellent</span>
+           </div>
+           <div style="display: flex; justify-content: space-between;"><span class="pdf-details">Date:</span> <span id="pdf-date" class="pdf-details" style="font-weight: 600;">Jan 1, 2025</span>
+           </div>
+           <div style="display: flex; justify-content: space-between;"><span class="pdf-details">Certificate ID:</span> <span id="pdf-id" class="pdf-details" style="font-weight: 600;">SKX-123456</span>
+           </div>
+          </div>
+         </div><!-- Right Column: Performance Breakdown -->
+         <div>
+          <h4 class="pdf-details-heading">Category Performance</h4>
+          <div id="pdf-categories" style="display: flex; flex-direction: column; gap: 6px;"><!-- Will be populated dynamically -->
+          </div>
+         </div>
+        </div><!-- Certification Mark -->
+        <div style="text-align: center; margin: 20px 0;">
+         <div class="pdf-certified-mark">
+          SKILLEXA CERTIFIED 2025
+         </div>
+        </div><!-- Signatures Section -->
+        <div style="display: flex; justify-content: space-around; align-items: flex-end; gap: 40px;">
+         <div style="text-align: center; flex: 1;">
+          <div class="pdf-signature-line"></div>
+          <p class="pdf-signature-name">Jagdeep Kaur I</p>
+          <p class="pdf-signature-title">Founder</p>
+         </div>
+         <div style="text-align: center; flex: 1;">
+          <div class="pdf-signature-line"></div>
+          <p class="pdf-signature-name">Prajapathi Srushti K</p>
+          <p class="pdf-signature-title">Co-Founder</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </main>
+  <script>
+        // Quiz Questions for Communication Skills
+        const quizQuestions = [
+            {
+                category: "Listening Skills",
+                question: "What is the most important aspect of active listening?",
+                icon: "🎧",
+                options: [
+                    "Giving full attention and understanding the speaker's perspective",
+                    "Waiting for your turn to speak",
+                    "Thinking about your response while listening",
+                    "Interrupting to show you're engaged"
+                ],
+                correctAnswer: 0
+            },
+            {
+                category: "Listening Skills",
+                question: "Which technique helps improve listening comprehension?",
+                icon: "🎧",
+                options: [
+                    "Paraphrasing and summarizing what you heard",
+                    "Multitasking while listening",
+                    "Focusing only on keywords",
+                    "Avoiding eye contact to concentrate"
+                ],
+                correctAnswer: 0
+            },
+            {
+                category: "Listening Skills",
+                question: "What should you do when you don't understand something?",
+                icon: "🎧",
+                options: [
+                    "Politely ask for clarification or examples",
+                    "Pretend to understand and move on",
+                    "Change the subject immediately",
+                    "Wait and hope it makes sense later"
+                ],
+                correctAnswer: 0
+            },
+            {
+                category: "Verbal Clarity",
+                question: "What makes verbal communication most effective?",
+                icon: "🗣️",
+                options: [
+                    "Clear pronunciation and appropriate pacing",
+                    "Using complex vocabulary to impress",
+                    "Speaking as fast as possible",
+                    "Using jargon and technical terms"
+                ],
+                correctAnswer: 0
+            },
+            {
+                category: "Verbal Clarity",
+                question: "How can you improve your verbal clarity?",
+                icon: "🗣️",
+                options: [
+                    "Practice articulation and record yourself speaking",
+                    "Speak in a monotone voice",
+                    "Use filler words frequently",
+                    "Speak very quietly"
+                ],
+                correctAnswer: 0
+            },
+            {
+                category: "Verbal Clarity",
+                question: "What should you do when presenting complex information?",
+                icon: "🗣️",
+                options: [
+                    "Break it down into simple, digestible parts",
+                    "Present everything at once quickly",
+                    "Use only technical terminology",
+                    "Assume everyone understands"
+                ],
+                correctAnswer: 0
+            },
+            {
+                category: "Feedback & Response",
+                question: "What characterizes constructive feedback?",
+                icon: "💬",
+                options: [
+                    "Specific, actionable, and delivered with empathy",
+                    "General criticism without examples",
+                    "Focusing only on negative aspects",
+                    "Comparing to others constantly"
+                ],
+                correctAnswer: 0
+            },
+            {
+                category: "Feedback & Response",
+                question: "How should you respond to criticism?",
+                icon: "💬",
+                options: [
+                    "Listen actively and ask clarifying questions",
+                    "Become defensive immediately",
+                    "Ignore it completely",
+                    "Make excuses"
+                ],
+                correctAnswer: 0
+            },
+            {
+                category: "Feedback & Response",
+                question: "When giving feedback, you should:",
+                icon: "💬",
+                options: [
+                    "Focus on behavior and impact, not personality",
+                    "Attack the person's character",
+                    "Be vague to avoid conflict",
+                    "Only give feedback when angry"
+                ],
+                correctAnswer: 0
+            },
+            {
+                category: "Non-Verbal Communication",
+                question: "What percentage of communication is typically non-verbal?",
+                icon: "👋",
+                options: [
+                    "About 55-70% including body language",
+                    "About 10-20%",
+                    "About 90-95%",
+                    "Non-verbal doesn't matter"
+                ],
+                correctAnswer: 0
+            },
+            {
+                category: "Non-Verbal Communication",
+                question: "Which non-verbal cue shows confidence?",
+                icon: "👋",
+                options: [
+                    "Maintaining eye contact and good posture",
+                    "Crossing arms and looking down",
+                    "Fidgeting constantly",
+                    "Avoiding all gestures"
+                ],
+                correctAnswer: 0
+            },
+            {
+                category: "Non-Verbal Communication",
+                question: "How can body language contradict verbal messages?",
+                icon: "👋",
+                options: [
+                    "When facial expressions don't match words",
+                    "Body language never contradicts words",
+                    "Only through hand gestures",
+                    "Through clothing choices only"
+                ],
+                correctAnswer: 0
+            },
+            {
+                category: "Cultural Awareness",
+                question: "Why is cultural awareness important in communication?",
+                icon: "🤝",
+                options: [
+                    "Different cultures have varying communication norms",
+                    "All cultures communicate identically",
+                    "It's not relevant to communication",
+                    "Only language differences matter"
+                ],
+                correctAnswer: 0
+            },
+            {
+                category: "Cultural Awareness",
+                question: "How should you approach cross-cultural communication?",
+                icon: "🤝",
+                options: [
+                    "With respect, curiosity, and openness to learn",
+                    "By imposing your cultural norms",
+                    "By avoiding cultural differences",
+                    "By making assumptions based on stereotypes"
+                ],
+                correctAnswer: 0
+            },
+            {
+                category: "Cultural Awareness",
+                question: "What helps in understanding cultural communication styles?",
+                icon: "🤝",
+                options: [
+                    "Learning about and experiencing diverse cultures",
+                    "Relying on stereotypes",
+                    "Avoiding people from other cultures",
+                    "Assuming all cultures are the same"
+                ],
+                correctAnswer: 0
+            },
+            {
+                category: "Written Communication",
+                question: "What makes written communication effective?",
+                icon: "✍️",
+                options: [
+                    "Clarity, conciseness, and proper structure",
+                    "Using complex sentences always",
+                    "Writing long paragraphs",
+                    "Avoiding punctuation"
+                ],
+                correctAnswer: 0
+            },
+            {
+                category: "Written Communication",
+                question: "When writing professional emails, you should:",
+                icon: "✍️",
+                options: [
+                    "Use clear subject lines and proper greetings",
+                    "Write in all capital letters",
+                    "Use excessive exclamation marks",
+                    "Skip proofreading to save time"
+                ],
+                correctAnswer: 0
+            },
+            {
+                category: "Written Communication",
+                question: "How can you improve written clarity?",
+                icon: "✍️",
+                options: [
+                    "Edit and revise before sending",
+                    "Never check for errors",
+                    "Use ambiguous language",
+                    "Write stream of consciousness"
+                ],
+                correctAnswer: 0
+            },
+            {
+                category: "Listening Skills",
+                question: "What is a barrier to effective listening?",
+                icon: "🎧",
+                options: [
+                    "Distractions and preconceived judgments",
+                    "Maintaining eye contact",
+                    "Taking notes",
+                    "Asking questions"
+                ],
+                correctAnswer: 0
+            },
+            {
+                category: "Verbal Clarity",
+                question: "In public speaking, vocal variety helps to:",
+                icon: "🗣️",
+                options: [
+                    "Keep audience engaged and emphasize key points",
+                    "Confuse the audience",
+                    "Make you seem unprofessional",
+                    "Distract from your message"
+                ],
+                correctAnswer: 0
             }
+        ];
 
-            function startQuiz() {
-                categoryPreview.classList.add('hidden');
-                quizScreen.classList.remove('hidden');
-                
-                // Start the timer
-                startTimer();
-                
-                // Show first question
-                showQuestion(0);
-                updateQuizProgress();
-            }
+        // Application State
+        let currentUser = { name: "", email: "" };
+        let currentQuestionIndex = 0;
+        let userAnswers = new Array(quizQuestions.length).fill(null);
+        let quizTimer;
+        let timeRemaining = 12 * 60; // 12 minutes in seconds
 
-            function startTimer() {
+        // DOM Elements
+        const loginScreen = document.getElementById('login-screen');
+        const categoryPreview = document.getElementById('category-preview');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        const certificateScreen = document.getElementById('certificate-screen');
+
+        // Event Listeners
+        document.getElementById('login-form').addEventListener('submit', handleLogin);
+        document.getElementById('start-quiz-btn').addEventListener('click', startQuiz);
+        document.getElementById('prev-btn').addEventListener('click', showPreviousQuestion);
+        document.getElementById('next-btn').addEventListener('click', handleNextQuestion);
+        document.getElementById('simulate-payment-btn').addEventListener('click', handlePayment);
+        document.getElementById('download-again-btn').addEventListener('click', downloadCertificate);
+
+        // Functions
+        function handleLogin(e) {
+            e.preventDefault();
+            currentUser.name = document.getElementById('fullName').value.trim();
+            currentUser.email = document.getElementById('email').value.trim();
+            
+            localStorage.setItem('userName', currentUser.name);
+            localStorage.setItem('userEmail', currentUser.email);
+            
+            loginScreen.classList.add('hidden');
+            categoryPreview.classList.remove('hidden');
+        }
+
+        function startQuiz() {
+            categoryPreview.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            startTimer();
+            showQuestion(0);
+        }
+
+        function startTimer() {
+            updateTimerDisplay();
+            quizTimer = setInterval(() => {
+                timeRemaining--;
                 updateTimerDisplay();
-                quizTimer = setInterval(() => {
-                    timeRemaining--;
-                    updateTimerDisplay();
-                    
-                    if (timeRemaining <= 0) {
-                        clearInterval(quizTimer);
-                        submitQuiz();
-                    }
-                }, 1000);
-            }
-
-            function updateTimerDisplay() {
-                const minutes = Math.floor(timeRemaining / 60);
-                const seconds = timeRemaining % 60;
-                timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
                 
-                // Update timer bar
-                const percentRemaining = (timeRemaining / (10 * 60)) * 100;
-                timerBarElement.style.width = `${percentRemaining}%`;
-                
-                // Change color based on time remaining
-                if (percentRemaining > 60) {
-                    timerBarElement.className = 'timer-bar bg-gradient-to-r from-green-400 to-blue-500 h-2 rounded-full';
-                } else if (percentRemaining > 30) {
-                    timerBarElement.className = 'timer-bar bg-gradient-to-r from-yellow-400 to-orange-500 h-2 rounded-full';
-                } else {
-                    timerBarElement.className = 'timer-bar bg-gradient-to-r from-red-500 to-pink-500 h-2 rounded-full';
-                }
-            }
-
-            function showQuestion(index) {
-                const question = quizQuestions[index];
-                
-                // Update question content
-                questionIcon.innerHTML = question.icon;
-                questionText.textContent = question.question;
-                
-                // Clear previous options
-                optionsContainer.innerHTML = '';
-                
-                // Add new options
-                question.options.forEach((option, i) => {
-                    const optionElement = document.createElement('div');
-                    optionElement.className = `quiz-option p-4 border border-gray-700 rounded-lg cursor-pointer transition-colors ${userAnswers[index] === i ? 'selected' : ''}`;
-                    optionElement.innerHTML = `
-                        <div class="flex items-center">
-                            <div class="w-6 h-6 rounded-full border-2 border-gray-400 flex items-center justify-center mr-3">
-                                ${userAnswers[index] === i ? '<div class="w-3 h-3 rounded-full bg-purple-500"></div>' : ''}
-                            </div>
-                            <span class="text-white">${option}</span>
-                        </div>
-                    `;
-                    
-                    optionElement.addEventListener('click', () => {
-                        // Remove selected class from all options
-                        document.querySelectorAll('.quiz-option').forEach(opt => {
-                            opt.classList.remove('selected');
-                            opt.querySelector('.w-6').innerHTML = '';
-                        });
-                        
-                        // Add selected class to clicked option
-                        optionElement.classList.add('selected');
-                        optionElement.querySelector('.w-6').innerHTML = '<div class="w-3 h-3 rounded-full bg-purple-500"></div>';
-                        
-                        // Save answer
-                        userAnswers[index] = i;
-                        
-                        // Enable next button if it was disabled
-                        nextBtn.disabled = false;
-                    });
-                    
-                    optionsContainer.appendChild(optionElement);
-                });
-                
-                // Update current question index
-                currentQuestionIndex = index;
-                
-                // Update navigation buttons
-                prevBtn.disabled = index === 0;
-                nextBtn.textContent = index === quizQuestions.length - 1 ? 'Submit' : 'Next';
-                
-                // Disable next button if no answer selected
-                nextBtn.disabled = userAnswers[index] === null;
-                
-                // Update progress indicators
-                currentQuestionElement.textContent = index + 1;
-                const progressPercent = Math.round(((index + 1) / quizQuestions.length) * 100);
-                progressPercentElement.textContent = progressPercent;
-                progressBarElement.style.width = `${progressPercent}%`;
-                
-                // Add animation
-                questionContainer.classList.remove('scale-in');
-                void questionContainer.offsetWidth; // Trigger reflow
-                questionContainer.classList.add('scale-in');
-            }
-
-            function showPreviousQuestion() {
-                if (currentQuestionIndex > 0) {
-                    showQuestion(currentQuestionIndex - 1);
-                }
-            }
-
-            function handleNextQuestion() {
-                if (currentQuestionIndex < quizQuestions.length - 1) {
-                    showQuestion(currentQuestionIndex + 1);
-                } else {
+                if (timeRemaining <= 0) {
+                    clearInterval(quizTimer);
                     submitQuiz();
                 }
-            }
+            }, 1000);
+        }
 
-            function updateQuizProgress() {
-                const answeredCount = userAnswers.filter(answer => answer !== null).length;
-                const progressPercent = Math.round((answeredCount / quizQuestions.length) * 100);
-                progressPercentElement.textContent = progressPercent;
-                progressBarElement.style.width = `${progressPercent}%`;
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            document.getElementById('timer').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            const percentRemaining = (timeRemaining / (12 * 60)) * 100;
+            const timerBar = document.getElementById('timer-bar');
+            timerBar.style.width = `${percentRemaining}%`;
+            
+            if (percentRemaining > 60) {
+                timerBar.className = 'timer-bar bg-gradient-to-r from-green-400 to-blue-500 h-3 rounded-full';
+            } else if (percentRemaining > 30) {
+                timerBar.className = 'timer-bar bg-gradient-to-r from-yellow-400 to-orange-500 h-3 rounded-full';
+            } else {
+                timerBar.className = 'timer-bar bg-gradient-to-r from-red-600 to-red-400 h-3 rounded-full';
             }
+        }
 
-            function submitQuiz() {
-                // Stop the timer
-                clearInterval(quizTimer);
+        function showQuestion(index) {
+            const question = quizQuestions[index];
+            
+            document.getElementById('question-icon').textContent = question.icon;
+            document.getElementById('question-text').textContent = question.question;
+            
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, i) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = `quiz-option p-5 border-2 border-white border-opacity-30 rounded-xl ${
+                    userAnswers[index] === i ? 'selected' : ''
+                }`;
                 
-                // Calculate results
-                const results = calculateResults();
-                
-                // Display results
-                displayResults(results);
-                
-                // Hide quiz screen and show results screen
-                quizScreen.classList.add('hidden');
-                resultsScreen.classList.remove('hidden');
-            }
-
-            function calculateResults() {
-                // Calculate total score
-                let totalCorrect = 0;
-                userAnswers.forEach((answer, index) => {
-                    if (answer === quizQuestions[index].correctAnswer) {
-                        totalCorrect++;
-                    }
-                });
-                
-                const totalScore = Math.round((totalCorrect / quizQuestions.length) * 100);
-                
-                // Calculate category scores
-                const categories = {};
-                quizQuestions.forEach((question, index) => {
-                    const category = question.category;
-                    if (!categories[category]) {
-                        categories[category] = {
-                            total: 0,
-                            correct: 0
-                        };
-                    }
-                    
-                    categories[category].total++;
-                    if (userAnswers[index] === question.correctAnswer) {
-                        categories[category].correct++;
-                    }
-                });
-                
-                // Convert to percentages and ratings
-                const categoryResults = {};
-                Object.keys(categories).forEach(category => {
-                    const score = Math.round((categories[category].correct / categories[category].total) * 100);
-                    let rating;
-                    let icon;
-                    
-                    if (score >= 90) {
-                        rating = 'Excellent';
-                        icon = '🌟';
-                    } else if (score >= 75) {
-                        rating = 'Good';
-                        icon = '👍';
-                    } else if (score >= 60) {
-                        rating = 'Satisfactory';
-                        icon = '👌';
-                    } else {
-                        rating = 'Needs Improvement';
-                        icon = '📝';
-                    }
-                    
-                    categoryResults[category] = {
-                        score,
-                        rating,
-                        icon
-                    };
-                });
-                
-                // Determine overall rating
-                let overallRating;
-                if (totalScore >= 90) {
-                    overallRating = 'Excellent';
-                } else if (totalScore >= 75) {
-                    overallRating = 'Good';
-                } else if (totalScore >= 60) {
-                    overallRating = 'Satisfactory';
-                } else {
-                    overallRating = 'Needs Improvement';
-                }
-                
-                return {
-                    totalScore,
-                    totalCorrect,
-                    totalQuestions: quizQuestions.length,
-                    categoryResults,
-                    overallRating
-                };
-            }
-
-            function displayResults(results) {
-                // Update total score
-                document.getElementById('total-score').textContent = results.totalScore;
-                document.getElementById('max-score').textContent = '100';
-                
-                // Update score gauge
-                const scoreCircle = document.getElementById('score-circle');
-                const circumference = 2 * Math.PI * 45; // 2πr
-                const offset = circumference - (results.totalScore / 100) * circumference;
-                scoreCircle.style.strokeDasharray = `${circumference} ${circumference}`;
-                scoreCircle.style.strokeDashoffset = offset;
-                
-                // Set color based on score
-                if (results.totalScore >= 90) {
-                    scoreCircle.style.stroke = '#10B981'; // Green
-                } else if (results.totalScore >= 75) {
-                    scoreCircle.style.stroke = '#3B82F6'; // Blue
-                } else if (results.totalScore >= 60) {
-                    scoreCircle.style.stroke = '#F59E0B'; // Yellow
-                } else {
-                    scoreCircle.style.stroke = '#EF4444'; // Red
-                }
-                
-                document.getElementById('score-percentage').textContent = `${results.totalScore}%`;
-                
-                // Update category results
-                const categoryResultsContainer = document.getElementById('category-results');
-                categoryResultsContainer.innerHTML = '';
-                
-                Object.keys(results.categoryResults).forEach(category => {
-                    const result = results.categoryResults[category];
-                    const categoryElement = document.createElement('div');
-                    
-                    // Set background color based on rating
-                    let bgColor;
-                    if (result.rating === 'Excellent') {
-                        bgColor = 'bg-gradient-to-br from-green-500 to-emerald-600';
-                    } else if (result.rating === 'Good') {
-                        bgColor = 'bg-gradient-to-br from-blue-500 to-indigo-600';
-                    } else if (result.rating === 'Satisfactory') {
-                        bgColor = 'bg-gradient-to-br from-yellow-400 to-orange-500';
-                    } else {
-                        bgColor = 'bg-gradient-to-br from-red-500 to-pink-600';
-                    }
-                    
-                    categoryElement.className = `${bgColor} rounded-lg p-4 text-white`;
-                    categoryElement.innerHTML = `
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <h4 class="font-medium">${category}</h4>
-                                <p class="text-sm text-white text-opacity-90">${result.rating}</p>
-                            </div>
-                            <div class="text-2xl">${result.icon}</div>
+                optionDiv.innerHTML = `
+                    <div class="flex items-center gap-4">
+                        <div class="w-7 h-7 rounded-full border-2 border-white flex items-center justify-center flex-shrink-0">
+                            ${userAnswers[index] === i ? '<div class="w-4 h-4 rounded-full bg-pink-400"></div>' : ''}
                         </div>
-                        <div class="mt-2 w-full bg-white bg-opacity-30 rounded-full h-2">
-                            <div class="bg-white h-2 rounded-full" style="width: ${result.score}%"></div>
-                        </div>
-                        <div class="text-right mt-1 text-sm">${result.score}%</div>
-                    `;
-                    
-                    categoryResultsContainer.appendChild(categoryElement);
-                });
+                        <span class="text-white text-lg flex-grow">${option}</span>
+                    </div>
+                `;
                 
-                // Store results for certificate generation
-                localStorage.setItem('quizResults', JSON.stringify(results));
+                optionDiv.addEventListener('click', () => selectOption(index, i, optionDiv));
+                optionsContainer.appendChild(optionDiv);
+            });
+            
+            currentQuestionIndex = index;
+            updateNavigationButtons();
+            updateProgress();
+            
+            const questionContainer = document.getElementById('question-container');
+            questionContainer.classList.remove('scale-in');
+            void questionContainer.offsetWidth;
+            questionContainer.classList.add('scale-in');
+        }
+
+        function selectOption(questionIndex, optionIndex, selectedElement) {
+            document.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.classList.remove('selected');
+                const radio = opt.querySelector('.w-7');
+                radio.innerHTML = '';
+            });
+            
+            selectedElement.classList.add('selected');
+            selectedElement.querySelector('.w-7').innerHTML = 
+                '<div class="w-4 h-4 rounded-full bg-pink-400"></div>';
+            
+            userAnswers[questionIndex] = optionIndex;
+            document.getElementById('next-btn').disabled = false;
+        }
+
+        function updateNavigationButtons() {
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            
+            prevBtn.disabled = currentQuestionIndex === 0;
+            nextBtn.disabled = userAnswers[currentQuestionIndex] === null;
+            nextBtn.innerHTML = currentQuestionIndex === quizQuestions.length - 1 
+                ? '🏁 Submit' 
+                : 'Next ➡️';
+        }
+
+        function updateProgress() {
+            const current = currentQuestionIndex + 1;
+            const percent = Math.round((current / quizQuestions.length) * 100);
+            
+            document.getElementById('current-question').textContent = current;
+            document.getElementById('progress-percent').textContent = percent;
+            document.getElementById('progress-bar').style.width = `${percent}%`;
+        }
+
+        function showPreviousQuestion() {
+            if (currentQuestionIndex > 0) {
+                showQuestion(currentQuestionIndex - 1);
             }
+        }
 
-             function handlePayment() {
-    const btn = document.getElementById('simulate-payment-btn');
-    
-    // Disable button immediately
-    btn.disabled = true;
-    btn.textContent = "Processing Payment...";
-    btn.classList.add("opacity-50", "cursor-not-allowed");
+        function handleNextQuestion() {
+            if (currentQuestionIndex < quizQuestions.length - 1) {
+                showQuestion(currentQuestionIndex + 1);
+            } else {
+                submitQuiz();
+            }
+        }
 
-    // Wait for 1 minute before showing certificate
-    setTimeout(() => {
-        // Hide results screen and show certificate screen
-        resultsScreen.classList.add('hidden');
-        certificateScreen.classList.remove('hidden');
-        
-        // Generate certificate
-        generateCertificate();
-        
-        // Auto-download after 1 second
-        setTimeout(downloadCertificate, 1000);
+        function submitQuiz() {
+            clearInterval(quizTimer);
+            const results = calculateResults();
+            displayResults(results);
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+        }
 
-        // Reset button state (optional, in case user returns)
-        btn.disabled = false;
-        btn.textContent = "Simulate Payment";
-        btn.classList.remove("opacity-50", "cursor-not-allowed");
-    }, 60000); //60000=1 min
-    
-}
-
-            function generateCertificate() {
-                // Get user info and results
-                const userName = localStorage.getItem('userName') || 'John Doe';
-                const results = JSON.parse(localStorage.getItem('quizResults')) || {
-                    totalScore: 85,
-                    overallRating: 'Good',
-                    categoryResults: {}
+        function calculateResults() {
+            let totalCorrect = 0;
+            userAnswers.forEach((answer, index) => {
+                if (answer === quizQuestions[index].correctAnswer) {
+                    totalCorrect++;
+                }
+            });
+            
+            const totalScore = Math.round((totalCorrect / quizQuestions.length) * 100);
+            
+            const categories = {};
+            quizQuestions.forEach((question, index) => {
+                const cat = question.category;
+                if (!categories[cat]) {
+                    categories[cat] = { total: 0, correct: 0, icon: question.icon };
+                }
+                categories[cat].total++;
+                if (userAnswers[index] === question.correctAnswer) {
+                    categories[cat].correct++;
+                }
+            });
+            
+            const categoryResults = {};
+            Object.keys(categories).forEach(cat => {
+                const score = Math.round((categories[cat].correct / categories[cat].total) * 100);
+                let rating = score >= 90 ? 'Excellent' : 
+                            score >= 75 ? 'Good' : 
+                            score >= 60 ? 'Satisfactory' : 'Needs Improvement';
+                
+                categoryResults[cat] = {
+                    score,
+                    rating,
+                    icon: categories[cat].icon
                 };
+            });
+            
+            const overallRating = totalScore >= 90 ? 'Excellent' : 
+                                 totalScore >= 75 ? 'Good' : 
+                                 totalScore >= 60 ? 'Satisfactory' : 'Needs Improvement';
+            
+            return { totalScore, totalCorrect, totalQuestions: quizQuestions.length, categoryResults, overallRating };
+        }
+
+        function displayResults(results) {
+            document.getElementById('total-score').textContent = results.totalScore;
+            document.getElementById('score-percentage').textContent = `${results.totalScore}%`;
+            
+            const scoreCircle = document.getElementById('score-circle');
+            const circumference = 283;
+            const offset = circumference - (results.totalScore / 100) * circumference;
+            scoreCircle.style.strokeDashoffset = offset;
+            
+            const color = results.totalScore >= 90 ? '#10B981' :
+                         results.totalScore >= 75 ? '#3B82F6' :
+                         results.totalScore >= 60 ? '#F59E0B' : '#EF4444';
+            scoreCircle.style.stroke = color;
+            
+            const categoryResultsContainer = document.getElementById('category-results');
+            categoryResultsContainer.innerHTML = '';
+            
+            Object.keys(results.categoryResults).forEach(cat => {
+                const result = results.categoryResults[cat];
+                const bgColor = result.rating === 'Excellent' ? 'bg-gradient-to-br from-green-500 to-emerald-600' :
+                               result.rating === 'Good' ? 'bg-gradient-to-br from-blue-500 to-indigo-600' :
+                               result.rating === 'Satisfactory' ? 'bg-gradient-to-br from-yellow-400 to-orange-500' :
+                               'bg-gradient-to-br from-red-500 to-pink-600';
                 
-                // Generate certificate ID
-                const certificateId = 'SKX-' + Math.floor(100000 + Math.random() * 900000);
+                const categoryDiv = document.createElement('div');
+                categoryDiv.className = `${bgColor} rounded-2xl p-6 text-white shadow-xl transform hover:scale-105 transition-all`;
+                categoryDiv.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <div>
+                            <h4 class="font-bold text-lg">${cat}</h4>
+                            <p class="text-sm text-white text-opacity-90">${result.rating}</p>
+                        </div>
+                        <div class="text-4xl">${result.icon}</div>
+                    </div>
+                    <div class="mt-3 w-full bg-white bg-opacity-30 rounded-full h-3">
+                        <div class="bg-white h-3 rounded-full" style="width: ${result.score}%"></div>
+                    </div>
+                    <div class="text-right mt-2 text-sm font-medium">${result.score}%</div>
+                `;
+                categoryResultsContainer.appendChild(categoryDiv);
+            });
+            
+            localStorage.setItem('quizResults', JSON.stringify(results));
+            startPaymentCountdown();
+        }
+
+        function startPaymentCountdown() {
+            let countdown = 60;
+            const btn = document.getElementById('simulate-payment-btn');
+            const countdownSpan = document.getElementById('countdown');
+            
+            const timer = setInterval(() => {
+                countdown--;
+                countdownSpan.textContent = countdown;
                 
-                // Get current date
-                const currentDate = new Date().toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                });
-                
-                // Update certificate content
-                document.getElementById('certificate-name').textContent = userName;
-                document.getElementById('certificate-score').textContent = `${results.totalScore}/100`;
-                document.getElementById('certificate-rank').textContent = results.overallRating;
-                document.getElementById('certificate-date').textContent = currentDate;
-                document.getElementById('certificate-id').textContent = certificateId;
-                
-                // Update category results
-                const certificateCategoriesContainer = document.getElementById('certificate-categories');
-                certificateCategoriesContainer.innerHTML = '';
-                
-                Object.keys(results.categoryResults).forEach(category => {
-                    const result = results.categoryResults[category];
-                    const categoryElement = document.createElement('div');
-                    categoryElement.className = 'flex items-center mb-1';
-                    categoryElement.innerHTML = `
-                        <span class="mr-2">${result.icon}</span>
-                        <span class="text-sm">${category}: <span class="font-medium">${result.rating}</span></span>
-                    `;
-                    
-                    certificateCategoriesContainer.appendChild(categoryElement);
-                });
+                if (countdown <= 0) {
+                    clearInterval(timer);
+                    btn.disabled = false;
+                    btn.className = 'w-full px-6 py-4 bg-gradient-to-r from-purple-600 via-pink-500 to-purple-600 text-white rounded-xl font-semibold text-lg hover:opacity-90 transition-all transform hover:scale-105 shimmer shadow-lg cursor-pointer';
+                    document.getElementById('payment-btn-text').innerHTML = '💳 Complete Payment & Get Certificate';
+                }
+            }, 1000);
+        }
+
+        function handlePayment() {
+            resultsScreen.classList.add('hidden');
+            certificateScreen.classList.remove('hidden');
+            generateCertificate();
+            setTimeout(downloadCertificate, 2000);
+        }
+
+        /**
+         * CERTIFICATE GENERATION FUNCTION
+         * This function populates BOTH the visible preview certificate AND the fixed-size offscreen certificate
+         * The offscreen certificate (certificate-pdf) is what gets captured by html2canvas for PDF generation
+         */
+        function generateCertificate() {
+            const userName = localStorage.getItem('userName') || 'John Doe';
+            const results = JSON.parse(localStorage.getItem('quizResults')) || {
+                totalScore: 85,
+                overallRating: 'Good',
+                categoryResults: {}
+            };
+            
+            const certificateId = 'SKX-' + Math.floor(100000 + Math.random() * 900000);
+            const currentDate = new Date().toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            // Populate the VISIBLE preview certificate (responsive)
+            document.getElementById('certificate-name').textContent = userName;
+            document.getElementById('certificate-score').textContent = `${results.totalScore}/100`;
+            document.getElementById('certificate-rank').textContent = results.overallRating;
+            document.getElementById('certificate-date').textContent = currentDate;
+            document.getElementById('certificate-id').textContent = certificateId;
+            
+            const categoriesContainer = document.getElementById('certificate-categories');
+            categoriesContainer.innerHTML = '';
+            
+            Object.keys(results.categoryResults).forEach(cat => {
+                const result = results.categoryResults[cat];
+                const catDiv = document.createElement('div');
+                catDiv.className = 'flex items-center justify-between';
+                catDiv.innerHTML = `
+                    <div class="flex items-center gap-1">
+                        <span class="certificate-text">${result.icon}</span>
+                        <span class="certificate-text" style="font-family: Georgia, serif;">${cat}:</span>
+                    </div>
+                    <span class="certificate-text font-medium" style="font-family: Georgia, serif;">${result.rating}</span>
+                `;
+                categoriesContainer.appendChild(catDiv);
+            });
+            
+            // Populate the OFFSCREEN PDF certificate (fixed-size for consistent PDF output)
+            document.getElementById('pdf-user-name').textContent = userName;
+            document.getElementById('pdf-score').textContent = `${results.totalScore}/100`;
+            document.getElementById('pdf-rank').textContent = results.overallRating;
+            document.getElementById('pdf-date').textContent = currentDate;
+            document.getElementById('pdf-id').textContent = certificateId;
+            
+            const pdfCategoriesContainer = document.getElementById('pdf-categories');
+            pdfCategoriesContainer.innerHTML = '';
+            
+            Object.keys(results.categoryResults).forEach(cat => {
+                const result = results.categoryResults[cat];
+                const catDiv = document.createElement('div');
+                catDiv.style.display = 'flex';
+                catDiv.style.justifyContent = 'space-between';
+                catDiv.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 16px;">${result.icon}</span>
+                        <span class="pdf-details">${cat}:</span>
+                    </div>
+                    <span class="pdf-details" style="font-weight: 600;">${result.rating}</span>
+                `;
+                pdfCategoriesContainer.appendChild(catDiv);
+            });
+        }
+
+        /**
+         * PDF DOWNLOAD FUNCTION
+         * KEY CHANGE: Uses the FIXED-SIZE offscreen certificate (certificate-pdf) instead of the responsive preview
+         * This ensures consistent PDF output across ALL devices (mobile, tablet, desktop)
+         * 
+         * WHY THIS WORKS:
+         * - The offscreen certificate has fixed dimensions (1122x794px = A4 landscape at 96 DPI)
+         * - html2canvas captures this fixed-size element regardless of viewport size
+         * - The PDF is generated from this consistent canvas, so it looks identical on all devices
+         * - The visible preview certificate remains responsive for better UX, but isn't used for PDF generation
+         */
+        function downloadCertificate() {
+            // Check if jsPDF library is loaded
+            if (typeof window.jspdf === 'undefined') {
+                showNotification('PDF library not loaded. Please refresh and try again.', 'error');
+                return;
             }
 
-            function downloadCertificate() {
-                const certificate = document.getElementById('certificate');
-                
-                // Use html2canvas to capture the certificate as an image
-                html2canvas(certificate, {
-                    scale: 2,
-                    logging: false,
-                    useCORS: true
-                }).then(canvas => {
-                    const imgData = canvas.toDataURL('image/png');
+            // CRITICAL: Capture the OFFSCREEN fixed-size certificate, NOT the responsive preview
+            const certificatePdf = document.getElementById('certificate-pdf');
+            
+            // Show loading notification
+            const loadingMsg = showNotification('🔄 Generating your certificate PDF...', 'info', 10000);
+            
+            // Capture the fixed-size certificate with html2canvas
+            html2canvas(certificatePdf, {
+                scale: 2,           // High quality but not excessive (2x scaling)
+                logging: false,     // Disable console logs
+                useCORS: true,      // Allow cross-origin images
+                allowTaint: false,  // Strict CORS for security
+                backgroundColor: '#ffffff',
+                width: 1122,        // Fixed A4 landscape width at 96 DPI
+                height: 794         // Fixed A4 landscape height at 96 DPI
+            }).then(canvas => {
+                try {
+                    // Remove loading message
+                    if (loadingMsg && loadingMsg.parentNode) {
+                        loadingMsg.remove();
+                    }
                     
-                    // Create PDF using jsPDF
+                    // Convert canvas to image data
+                    const imgData = canvas.toDataURL('image/png', 1.0);
+                    
+                    // Create PDF document in A4 landscape format
                     const { jsPDF } = window.jspdf;
                     const pdf = new jsPDF({
                         orientation: 'landscape',
                         unit: 'mm',
-                        format: 'a4'
+                        format: 'a4',      // 297mm x 210mm
+                        compress: true
                     });
                     
-                      const imgProps = pdf.getImageProperties(imgData);
-                    const pdfWidth = pdf.internal.pageSize.getWidth();
-                    const pdfHeightLimit = pdf.internal.pageSize.getHeight(); // max height available
-                    const scaleRatio = Math.min(pdfWidth / imgProps.width, pdfHeightLimit / imgProps.height);
-                    const imgWidth = imgProps.width * scaleRatio;
-                    const imgHeight = imgProps.height * scaleRatio;
-
-                    const xOffset = (pdfWidth - imgWidth) / 2;
-                    const yOffset = (pdfHeightLimit - imgHeight) / 2;
-                    pdf.addImage(imgData, 'PNG', xOffset, yOffset, imgWidth, imgHeight);
-
+                    // Get PDF dimensions
+                    const pdfWidth = pdf.internal.pageSize.getWidth();   // 297mm
+                    const pdfHeight = pdf.internal.pageSize.getHeight(); // 210mm
                     
-                    // Download the PDF
+                    // Add the certificate image to fill the entire PDF page
+                    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight, '', 'FAST');
+                    
+                    // Generate filename with user's name
                     const userName = localStorage.getItem('userName') || 'User';
-                    const fileName = `${userName.replace(/\s+/g, '_')}_Communication_Skills_Certificate.pdf`;
+                    const safeUserName = userName.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_]/g, '');
+                    const fileName = `${safeUserName}_Communication_Skills_Certificate.pdf`;
+                    
+                    // Save the PDF
                     pdf.save(fileName);
-                });
+                    
+                    // Show success notification
+                    showNotification('✅ Certificate downloaded successfully!', 'success');
+                    
+                } catch (error) {
+                    console.error('PDF generation error:', error);
+                    showNotification('❌ Error generating certificate. Please try again.', 'error');
+                }
+            }).catch(error => {
+                console.error('Canvas capture error:', error);
+                if (loadingMsg && loadingMsg.parentNode) {
+                    loadingMsg.remove();
+                }
+                showNotification('❌ Error capturing certificate. Please try again.', 'error');
+            });
+        }
+        
+        /**
+         * NOTIFICATION HELPER FUNCTION
+         * Shows toast-style notifications for user feedback
+         */
+        function showNotification(text, type = 'info', duration = 3000) {
+            const bgColors = {
+                success: 'bg-green-500',
+                error: 'bg-red-500',
+                info: 'bg-blue-500'
+            };
+            
+            const message = document.createElement('div');
+            message.className = `fixed top-4 right-4 ${bgColors[type]} text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in`;
+            message.textContent = text;
+            document.body.appendChild(message);
+            
+            if (duration > 0) {
+                setTimeout(() => {
+                    if (message.parentNode) {
+                        message.remove();
+                    }
+                }, duration);
             }
-        });
+            
+            return message;
+        }
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96d929b3e5fef242',t:'MTc1NDkzMDMwMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
-</body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9add76d303483b7f',t:'MTc2NTcxMjgyMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
